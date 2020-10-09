@@ -1,0 +1,68 @@
+<style>
+  div {
+    width: 100px;
+    height: 100px;
+    margin: 30px;
+    background-color: gray;
+    border-radius: 50px;
+    display: inline-block;
+  }
+
+  .green.light {
+    background-color: green;
+  }
+
+  .yellow.light {
+    background-color: yellow;
+  }
+
+  .red.light {
+    background-color: red;
+  }
+</style>
+
+<div class="green"></div>
+<div class="yellow"></div>
+<div class="red"></div>
+
+<script>
+  function green() {
+    let lights = document.getElementsByTagName('div');
+    for (let i = 0; i < lights.length; i++)
+      lights[i].classList.remove('light');
+    document.getElementsByClassName('green')[0].classList.add('light');
+  }
+  function yellow() {
+    let lights = document.getElementsByTagName('div');
+    for (let i = 0; i < lights.length; i++)
+      lights[i].classList.remove('light');
+    document.getElementsByClassName('yellow')[0].classList.add('light');
+  }
+  function red() {
+    let lights = document.getElementsByTagName('div');
+    for (let i = 0; i < lights.length; i++)
+      lights[i].classList.remove('light');
+    document.getElementsByClassName('red')[0].classList.add('light');
+  }
+
+  function sleep(t) { 
+    return new Promise((resolve, reject) => {
+      setTimeout(resolve, t)
+    })
+  }
+
+  function go() {
+    green();
+    sleep(1000).then(() => {
+      yellow();
+      sleep(300).then(() => {
+        red();
+        return sleep(500)
+      }).then(() => {
+        go();
+      })
+    })
+  }
+
+  go()
+</script>

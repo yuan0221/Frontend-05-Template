@@ -1,0 +1,74 @@
+<style>
+  div {
+    width: 100px;
+    height: 100px;
+    margin: 30px;
+    background-color: gray;
+    border-radius: 50px;
+    display: inline-block;
+  }
+
+  .green.light {
+    background-color: green;
+  }
+
+  .yellow.light {
+    background-color: yellow;
+  }
+
+  .red.light {
+    background-color: red;
+  }
+</style>
+
+<div class="green"></div>
+<div class="yellow"></div>
+<div class="red"></div>
+
+<button>next</button>
+
+<script>
+  function green() {
+    let lights = document.getElementsByTagName('div');
+    for (let i = 0; i < lights.length; i++)
+      lights[i].classList.remove('light');
+    document.getElementsByClassName('green')[0].classList.add('light');
+  }
+  function yellow() {
+    let lights = document.getElementsByTagName('div');
+    for (let i = 0; i < lights.length; i++)
+      lights[i].classList.remove('light');
+    document.getElementsByClassName('yellow')[0].classList.add('light');
+  }
+  function red() {
+    let lights = document.getElementsByTagName('div');
+    for (let i = 0; i < lights.length; i++)
+      lights[i].classList.remove('light');
+    document.getElementsByClassName('red')[0].classList.add('light');
+  }
+
+  function sleep(t) {
+    return new Promise((resolve, reject) => {
+      setTimeout(resolve, t)
+    })
+  }
+
+  function happen(element, eventName) {
+    return new Promise((resolve, reject) => {
+      element.addEventListener(eventName, resolve, { once: true })
+    })
+  }
+
+  async function go() {
+    while (true) {
+      green();
+      await happen(document.getElementsByTagName('button')[0], 'click')
+      yellow()
+      await happen(document.getElementsByTagName('button')[0], 'click')
+      red()
+      await happen(document.getElementsByTagName('button')[0], 'click')
+    }
+  }
+
+  go()
+</script>
