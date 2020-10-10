@@ -1,0 +1,33 @@
+<script>
+  let map = Array(10000).fill(0);
+
+  function path(map, start, end) {
+    let queue = [start];
+
+    function insert(x, y) {
+
+      if (x < 0 || x >= 100 || y < 0 || y >= 100)
+        return;
+      if (map[y * 100 + x])
+        return;
+
+      map[y * 100 + x] = 2;
+      queue.push([x, y]);
+    }
+
+    while (queue.length) {
+      let [x, y] = queue.shift();
+      console.log(x, y);
+      if (x === end[0] && y === end[1])
+        return true;
+
+      insert(x - 1, y);
+      insert(x, y - 1);
+      insert(x + 1, y);
+      insert(x, y + 1);
+    }
+    return false;
+  }
+
+  path(map, [0, 0], [50, 50]);
+</script>
