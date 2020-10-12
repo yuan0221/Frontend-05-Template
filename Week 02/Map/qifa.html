@@ -88,8 +88,8 @@
   }
 
   async function findPath(map, start, end) {
-    // let queue = new Sorted([start], (a, b) => distance(a) - distance(b));
-    let queue = [start];
+    let queue = new Sorted([start], (a, b) => distance(a) - distance(b));
+    // let queue = [start];
     let table = Object.create(map);
 
     async function insert(x, y, pre) {
@@ -103,15 +103,16 @@
       container.children[y * 100 + x].style.backgroundColor = 'lightgreen';
       // map[y * 100 + x] = 2;
       table[y * 100 + x] = pre;
-      queue.push([x, y]);
+      queue.give([x, y]);
     }
 
     function distance(point) {
       return (point[0] - end[0]) ** 2 + (point[1] - end[1]) ** 2;
     }
 
-    while (queue.length) {
-      let [x, y] = queue.shift();
+    while (queue.data.length) {
+      let [x, y] = queue.take();
+      
       if (x === end[0] && y === end[1]) {
         let path = [];
 
