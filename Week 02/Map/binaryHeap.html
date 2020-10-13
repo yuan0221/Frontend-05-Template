@@ -12,35 +12,38 @@
       let min = this.data[0];
       let x = this.data.pop();
 
-      while (arr.length > 1) {
+      let i = 0;
+      while (this.data.length > 2 * i + 1) {
         let a = i * 2 + 1,
           b = i * 2 + 2;
         //比较儿子的值，获取最小的
-        if (b < arr.length && arr[b] < arr[a]) {
+        if (b < this.data.length && this.data[b] < this.data[a]) {
           a = b
         }
         //如果已经没有大小颠倒则退出
-        if (arr[a] >= x) break;
+        if (this.data[a] >= x) break;
         //把儿子的数值提上去
-        arr[i] = arr[a]
+        this.data[i] = this.data[a]
         i = a
       }
-      arr[i] = x
+      this.data[i] = x
       return min;
     }
     give(v) {
-      if (!this.data.length)
-        this.data.push(v);
+      let i = this.data.length;
 
-      //父节点的编号
-      let p = (i - 1) / 2;
+      while(i) {
+        //父节点的编号
+        let p = parseInt((i - 1) / 2);
 
-      if (arr[p] <= v)
-        return;
+        if (this.data[p] <= v)
+          break;
 
-      //父节点的值下沉
-      arr[i] = arr[p]
-      i = p
+        //父节点的值下沉
+        this.data[i] = this.data[p]
+        i = p
+      }
+      this.data[i]=v
     }
   }
 </script>
