@@ -1,49 +1,66 @@
 <script>
-  // 二叉堆 
-
-  class BinaryHeap {
-    constructor(data, compare) {
-      this.data = data.slice();
-      this.compare = compare || ((a, b) => a - b);
+  class MaxHeap {
+    constructor(arr = []) {
+      this.data = arr;
+      //heapify方式创建堆结构
+      for (let i = this.parent(arr.length - 1); i >= 0; i--) {
+        this.siftDown(i);
+      }
     }
-    take() {
-      if (!this.data.length)
-        return;
-      let min = this.data[0];
-      let x = this.data.pop();
-
-      let i = 0;
-      while (this.data.length > 2 * i + 1) {
-        let a = i * 2 + 1,
-          b = i * 2 + 2;
-        //比较儿子的值，获取最小的
-        if (b < this.data.length && this.data[b] < this.data[a]) {
-          a = b
+    //父索引
+    parent(index) {
+      if (index === 0) {
+        throw new Error(`'index-0 doesn't not have parent `);
+      }
+      return Math.floor((index - 1) / 2);
+      //这是索引从0开始的情况，如果从1开始可以直接index/2向下取整即可
+    }
+    add(element) {
+      this.data.push(element);
+      this.siftUp(this.data.length - 1);//将最后一个元素进行上浮操作
+    }
+    extractMax() {
+      const ret = this.data[0];
+      this.swap(this.data, 0, this.data.length - 1);
+      this.data.pop();
+      this.siftDown(0);//下沉操作
+      return ret;
+    }
+    //上浮
+    siftUp(index) {
+        //只要元素没有上浮到最顶层并且父元素比当前小就继续上浮(堆的性质：
+            //最大堆的父节点应该比左右两个结点都要大
+        
+      while (index > 0 && this.data[this.parent(index)] < this.data[index]) {
+        //交换数组中位置
+        this.swap(this.data, index, this.parent(index));
+        //是不是依然不满足堆的性质
+        index = this.parent(index);
+      }
+    }
+    //下沉
+    siftDown(index) {
+      //极端情况：当左孩子索引小于数组长度时代表绝对没有右孩子，是叶子结点
+      while (index * 2 + 1 < this.data.length) {
+        let j = index * 2 + 1;
+        if (j + 1 < this.data.length && this.data[j + 1] > this.data[j]) {
+          j = index * 2 + 2;
         }
-        //如果已经没有大小颠倒则退出
-        if (this.data[a] >= x) break;
-        //把儿子的数值提上去
-        this.data[i] = this.data[a]
-        i = a
+        //data[j]是左右孩子中最大的值
+        if (this.data[index] > this.data[j]) {
+          break;//满足了堆的性质直接跳出
+        } else {
+          this.swap(this.data, index, j);//否则继续交换
+          index = j;
+        }
       }
-      this.data[i] = x
-      return min;
     }
-    give(v) {
-      let i = this.data.length;
-
-      while(i) {
-        //父节点的编号
-        let p = parseInt((i - 1) / 2);
-
-        if (this.data[p] <= v)
-          break;
-
-        //父节点的值下沉
-        this.data[i] = this.data[p]
-        i = p
+    //交换方法
+    swap(array, i, j) {
+      if (i < 0 || i >= this.data.length || j < 0 || j >= this.data.length) {
+        throw new Error('索引越界');
       }
-      this.data[i]=v
+      [array[i], array[j]] = [array[j], array[i]];
     }
   }
 </script>
