@@ -17,20 +17,19 @@
 <button onclick="localStorage['map'] = JSON.stringify(map)">save</button>
 
 <script>
-  
   class Sorted {
     constructor(data, compare) {
       this.data = data.slice();
       this.compare = compare || ((a, b) => a - b);
     }
     take() {
-      if(!this.data.length)
+      if (!this.data.length)
         return;
       let min = this.data[0];
       let minIndex = 0;
 
-      for(let i = 1; i < this.data.length; i++) {
-        if(this.compare(this.data[i], min) < 0) {
+      for (let i = 1; i < this.data.length; i++) {
+        if (this.compare(this.data[i], min) < 0) {
           min = this.data[i];
           minIndex = i;
         }
@@ -42,6 +41,57 @@
     }
     give(v) {
       this.data.push(v);
+    }
+  }
+
+  class MinHeap {
+    constructor(arr = [], compare) {
+      this.data = arr;
+      this.compare = compare || ((a, b) => a - b);
+      //构建堆
+      for (let i = this.parent(arr.length - 1); i >= 0; i--) {
+        this.down(i);
+      }
+    }
+    //父索引
+    parent(i) {
+      return i ? Math.floor((i - 1) / 2) : 0;
+    }
+    give(v) {
+      this.data.push(v);
+      this.up(this.data.length - 1); //重新构建堆（最后一个元素上浮）
+    }
+    take() {
+      const min = this.data[0];
+      this.swap(this.data, 0, this.data.length - 1);
+      this.data.pop();
+      this.down(0); //重新构建堆（第一个元素下沉）
+      return min;
+    }
+    //子节点上浮
+    up(i) {
+      while (i > 0 && this.compare(this.data[this.parent(i)], this.data[i]) > 0) {
+        this.swap(this.data, i, this.parent(i));
+        i = this.parent(i);
+      }
+    }
+    //父节点下沉
+    down(i) {
+      while (i * 2 + 1 < this.data.length) {
+        let j = i * 2 + 1;
+        if (j + 1 < this.data.length && this.compare(this.data[j + 1], this.data[j]) < 0) {
+          j = i * 2 + 2;
+        }
+        if (this.data[i] < this.data[j]) {
+          break;
+        } else {
+          this.swap(this.data, i, j); 
+          i = j;
+        }
+      }
+    }
+    swap(arr, i, j) {
+      [arr[i], arr[j]] = [arr[j], arr[i]];
     }
   }
 
@@ -88,7 +138,7 @@
   }
 
   async function findPath(map, start, end) {
-    let queue = new Sorted([start], (a, b) => distance(a) - distance(b));
+    let queue = new MinHeap([start], (a, b) => distance(a) - distance(b));
     // let queue = [start];
     let table = Object.create(map);
 
@@ -99,7 +149,7 @@
       if (table[y * 100 + x])
         return;
 
-      await sleep(1);
+      // await sleep(1);
       container.children[y * 100 + x].style.backgroundColor = 'lightgreen';
       // map[y * 100 + x] = 2;
       table[y * 100 + x] = pre;
@@ -112,11 +162,11 @@
 
     while (queue.data.length) {
       let [x, y] = queue.take();
-      
+
       if (x === end[0] && y === end[1]) {
         let path = [];
 
-        while(x !== start[0] || y !== start[1]) {
+        while (x !== start[0] || y !== start[1]) {
           path.push(map[y * 100 + x]);
           [x, y] = table[y * 100 + x];
           await sleep(1);

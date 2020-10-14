@@ -1,8 +1,8 @@
 <script>
-  class MaxHeap {
+  class MinHeap {
     constructor(arr = []) {
       this.data = arr;
-      //heapify方式创建堆结构
+      //构建堆
       for (let i = this.parent(arr.length - 1); i >= 0; i--) {
         this.siftDown(i);
       }
@@ -13,13 +13,12 @@
         throw new Error(`'index-0 doesn't not have parent `);
       }
       return Math.floor((index - 1) / 2);
-      //这是索引从0开始的情况，如果从1开始可以直接index/2向下取整即可
     }
-    add(element) {
+    give(element) {
       this.data.push(element);
       this.siftUp(this.data.length - 1);//将最后一个元素进行上浮操作
     }
-    extractMax() {
+    take() {
       const ret = this.data[0];
       this.swap(this.data, 0, this.data.length - 1);
       this.data.pop();
@@ -27,28 +26,22 @@
       return ret;
     }
     //上浮
-    siftUp(index) {
-        //只要元素没有上浮到最顶层并且父元素比当前小就继续上浮(堆的性质：
-            //最大堆的父节点应该比左右两个结点都要大
-        
-      while (index > 0 && this.data[this.parent(index)] < this.data[index]) {
-        //交换数组中位置
+    siftUp(index) {        
+      while (index > 0 && this.data[this.parent(index)] > this.data[index]) {
         this.swap(this.data, index, this.parent(index));
-        //是不是依然不满足堆的性质
         index = this.parent(index);
       }
     }
     //下沉
     siftDown(index) {
-      //极端情况：当左孩子索引小于数组长度时代表绝对没有右孩子，是叶子结点
       while (index * 2 + 1 < this.data.length) {
         let j = index * 2 + 1;
-        if (j + 1 < this.data.length && this.data[j + 1] > this.data[j]) {
+        if (j + 1 < this.data.length && this.data[j + 1] < this.data[j]) {
           j = index * 2 + 2;
         }
-        //data[j]是左右孩子中最大的值
-        if (this.data[index] > this.data[j]) {
-          break;//满足了堆的性质直接跳出
+        //data[j]是左右孩子中较小的值
+        if (this.data[index] < this.data[j]) {
+          break;
         } else {
           this.swap(this.data, index, j);//否则继续交换
           index = j;
