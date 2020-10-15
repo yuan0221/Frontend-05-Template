@@ -42,8 +42,11 @@
     give(v) {
       this.data.push(v);
     }
+    get length() {
+      return this.data.length;
+    }
   }
-
+  
   class MinHeap {
     constructor(arr = [], compare) {
       this.data = arr;
@@ -138,7 +141,7 @@
   }
 
   async function findPath(map, start, end) {
-    let queue = new MinHeap([start], (a, b) => distance(a) - distance(b));
+    let queue = new Sorted([start], (a, b) => distance(a) - distance(b));
     // let queue = [start];
     let table = Object.create(map);
 
@@ -160,7 +163,7 @@
       return (point[0] - end[0]) ** 2 + (point[1] - end[1]) ** 2;
     }
 
-    while (queue.data.length) {
+    while (queue.length) {
       let [x, y] = queue.take();
 
       if (x === end[0] && y === end[1]) {
