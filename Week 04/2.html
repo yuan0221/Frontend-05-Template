@@ -1,0 +1,41 @@
+<script>
+  function Kmp (source, pattarn) {
+    // 部分匹配表
+    let table = new Array(pattarn.length).fill(0);
+
+    // i表示pattarn串的索引, j表示pattarn串，从起点到索引i（包含）之前的匹配的最大长度
+    // a a b a a a c   
+    // 0 1 0 1 2 2 0    j
+    {
+      let i = 1, j = 0;
+      while(i < pattarn.length) {
+        if(pattarn[i] === pattarn[j]) {
+          ++i, ++j;
+          table[i - 1] = j;
+        } else {
+          if(j > 0) j = table[j - 1];
+          else ++i;
+        }
+      }
+      console.log(table); // 0 1 0 1 2 2 0 
+    }
+
+    {
+      // i表示source位置, j表示pattarn位置
+      let i = 0, j = 0;
+      while(i < source.length) {
+        if(source[i] === pattarn[j]) {
+          ++i, ++j;
+        } else {
+          if(j > 0) j = table[j - 1];
+          else ++i;
+        }
+        if(j === pattarn.length) 
+          return true;
+      } 
+      return false;
+    }
+  }
+
+  console.log(Kmp('aabaaadxxx', 'aabaaac'));
+</script>
