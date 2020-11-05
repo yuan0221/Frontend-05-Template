@@ -1,17 +1,28 @@
+<input type="range" id="r" min="0" max="255" />
+<input type="range" id="g" min="0" max="255" />
+<input type="range" id="b" min="0" max="255" />
+<div style="width: 100px;height: 100px;" id="dv"></div>
+
 <script>
   let callbacks = new Map();
+  let reactivites = new Map();
   let usedReactivites = [];
 
   let object = {
-    a: 1,
-    b: 2
+    r: 1,
+    g: 1,
+    b: 1
   }
 
   let po = reactive(object)
 
   effect(() => {
-    console.log(po.a);
+    document.getElementById('dv').style.backgroundColor = `rgba(${po.r}, ${po.g}, ${po.b})`;
   })
+
+  document.getElementById('r').addEventListener('input', event => po.r = event.target.value);
+  document.getElementById('g').addEventListener('input', event => po.g= event.target.value);
+  document.getElementById('b').addEventListener('input', event => po.b = event.target.value);
 
   function effect(callback) {
     // callbacks.push(callback);
@@ -31,7 +42,10 @@
   }
 
   function reactive(object) {
-    return new Proxy(object, {
+    if(reactivites.has(object)) 
+      return reactivites.get(object);
+
+    let proxy = new Proxy(object, {
       set(obj, prop, val) {
         obj[prop] = val;
         if(callbacks.get(obj))
@@ -45,9 +59,15 @@
       },
       get(obj, prop) {
         usedReactivites.push([obj, prop]);
+        if(typeof obj[prop] === 'object')
+          return reactive(obj[prop]);
+
         return obj[prop];
       }
     })
+
+    reactivites.set(object, proxy);
+    return proxy;
   }
 
 </script>

@@ -1,0 +1,19 @@
+<div id="dv" style="width: 100px;height: 100px;background-color:red;"></div>
+
+<script>
+  let drag = document.getElementById('dv');
+  drag.addEventListener('mousedown', function(event){
+    let up = () => {
+      document.removeEventListener('mousedown', move);
+      document.removeEventListener('mouseup', up);
+    }
+
+    let move = event => {
+      console.log(event);
+      // drag.style.transform = `translate(${event.clientX}px, ${event.clientY}px)`;
+    }
+
+    document.addEventListener('mousedown', move);
+    document.addEventListener('mouseup', up);
+  })
+</script>
