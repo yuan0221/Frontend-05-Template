@@ -21,6 +21,99 @@
   >BNF(Backus-Naur Form)是描述编程语言的**文法**。巴科斯范式是一种用于表示上下文无关文法的语言，上下文无关文法描述了一类**形式语言**。
   自然语言存在不同程度的二义性。这种模糊、不确定的方式无法精确定义一门程序设计语言。必须设计一种准确无误地描述程序设计语言的语法结构，这种严谨、简洁、易读的形式规则描述的语言结构模型称为**文法**。
 
+## 3. js最小单位
+  ### Atom 原子
+  #### Grammar 语法
+  - Literal （字面值）
+  - Variable (变量)
+  - KeyWorlds （关键字）
+  - Whitespace （空白符）
+  - Line Terminator （换行符）
+
+  #### Runtime 运行时
+  - Types （运行时类型）
+  - Execution Context （执行上下文）
+
+## 4. js类型
+  - Number
+  - String
+  - Boolean
+  - Object
+  - Null
+  - Undefined
+  - Symbol
+  - (BigInt) 
+
+  ### Number
+  - 概念
+    - IEEE754 Double Float 双精度浮点数
+      - Sign (1) 符号位，0表示正 1表示负
+      - Exponent (11) 指数位
+      - Fraction (52) 精度位
+
+  - 语法
+    - 十进制 
+      - 0 
+      - 0. 
+      - .0 
+      - 1e2
+    - 二进制
+      - 0b111  0b开头只能表示整数
+    - 八进制
+      - 0o10  0o开头
+    - 十六进制
+      - 0xFF  0x开头
+
+  - 案例
+    ```
+      0.toString()
+      0 .tostring()
+    ```
+    ```
+      0.1 + 0.2 ！== 0.3
+      十进制转为二进制表示的时候，有精度损失
+      两次准换，一次相加，一次比较，有四次精度损失
+    ```
+  ### String
+  - 概念
+    - Character 字符
+      - ASCII 
+        - 127个字符，26个大写，26个小写，制表符，换行符， 特殊字符，最早的美国计算机编码方式
+      - Unicode
+        - 全世界的语言字符合集
+      - UCS
+        - 0000 ～ FFFF 两个字节
+      - GB
+        - GB2312
+        - GBK(GB13000)
+        - GB18030
+        - GB和Unicode不兼容，兼容ASCII
+      - ISO-8859
+        - 兼容ASCII，但是互不兼容
+      - BIG5
+        - 台湾
+    - Code Point 码点表示
+    - Encoding 编码方式
+      - UTF
+        - UTF8 
+          - 一个字符占1个字节（8个bit位）
+        - UTF16
+          - 一个字符占2个字节（16个bit位）
+      
+  ### Null 和 Undefined 
+    - Null
+      - 有值但是为空
+      - 关键字，不能给null赋值
+    - Undefined
+      - 没有设置值，未定义
+      - 全局变量，可以给undefined赋值
+    - void 0
+
+
+
+
+
+
 
 
 
