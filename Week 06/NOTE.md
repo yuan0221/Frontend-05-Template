@@ -21,20 +21,44 @@
   >BNF(Backus-Naur Form)是描述编程语言的**文法**。巴科斯范式是一种用于表示上下文无关文法的语言，上下文无关文法描述了一类**形式语言**。
   自然语言存在不同程度的二义性。这种模糊、不确定的方式无法精确定义一门程序设计语言。必须设计一种准确无误地描述程序设计语言的语法结构，这种严谨、简洁、易读的形式规则描述的语言结构模型称为**文法**。
 
-## 3. js最小单位
-  ### Atom 原子
-  #### Grammar 语法
-  - Literal （字面值）
-  - Variable (变量)
-  - KeyWorlds （关键字）
-  - Whitespace （空白符）
-  - Line Terminator （换行符）
+## 3. 一般命令式编程语言
+- Atom 
+  - identifier 标示符
+  - Literal 字面量
+- Expression
+  - Atom 原子
+  - Operator 运算符
+  - Punctuator 符号
+- Statement 语句
+  - Expression
+  - Keyword
+  - Punctuator
+- Structure 机构化
+  - Function
+  - Class
+  - Process
+  - Namespace
+- Program 
+  - Program
+  - Module
+  - Package
+  - Library
 
-  #### Runtime 运行时
-  - Types （运行时类型）
-  - Execution Context （执行上下文）
+语法 语义 运行时
 
-## 4. js类型
+## 4. js最小单位
+- Atom 原子
+  - Grammar 语法
+    - Literal （字面值）
+    - Variable (变量)
+    - KeyWorlds （关键字）
+    - Whitespace （空白符）
+    - Line Terminator （换行符）
+  - Runtime 运行时
+    - Types （运行时类型）
+    - Execution Context （执行上下文）
+
+## 5. js类型
   - Number
   - String
   - Boolean
@@ -142,8 +166,49 @@
       - 总是遵循'行为改变状态'的原则
       - 启示：人类交流的自然语言、口语和程序设计表达形式是不一样的
   
-  - js中的对象
-    - 
+## 6. js中的对象
+  - Javascript运行时，原生对象的描述，只需要关心**原型**和**属性**两个部分
+  - 属性可以描述状态，也可以描述行为
+  - 唯一表示符是内存地址
+  - 找对象上的属性的时候，自身没有的话，就在原型上找，一直找到原型为null，找属性的这种行为，形成了原型链
+  - 属性的是kv对，k是字符串或者symbol
+  - javascript用属性统一抽象对象的状态和行为，数据属性描述状态， 访问器属性描述行为，数据属性中值是函数，也可以描述行为
+  - 数据属性
+    - \[[value]] 
+    - writeble 
+    - enumerble 
+    - configurable
+  - 访问器属性
+    - get 
+    - set 
+    - enumerble 
+    - configurable
+  - Api/Grammer
+    - 基本面向对象能力
+      - {}
+      - . 
+      - [] 
+      - Object.defineproperty
+    - 基于原型的对象描述方法
+      - Object.create 
+      - Object.setPrototypeOf
+      - Object.getPrototypeOf  
+    - 基于分类
+      - new
+      - class
+      - extends
+    - es3版本
+      - new
+      - function
+      - prototype
+    - 特殊行为对象
+      - Array：Array 的 length 属性根据最大的下标自动发生变化。
+      - Object.prototype：作为所有正常对象的默认原型，不能再给它设置原型了。
+      - String：为了支持下标运算，String 的正整数属性访问会去字符串里查找。
+      - Arguments：arguments 的非负整数型下标属性跟对应的变量联动。
+      - 模块的 namespace 对象：特殊的地方非常多，跟一般对象完全不一样，尽量只用于 import
+      - 类型数组和数组缓冲区：跟内存块相关联，下标运算比较特殊
+      - bind 后的 function：跟原来的函数相关联
 
 
 
