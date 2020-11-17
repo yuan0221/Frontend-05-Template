@@ -97,11 +97,19 @@
         - ? : 
 
   - 类型转换
-    - 
+    - Unboxing 拆箱转换
+      - toPremitive
+      - toString VS valueOf
+      - Symbol.toPremitive
+    - Boxing 装箱转换
+      - Number  --- new Number(1) --- 1
+      - String  --- new String("a")  --- "a"
+      - Boolean --- new Boolean(true) --- true
+      - Symbol  --- new Object(Symbol("a")) --- Symbol("a")
 
 ## 2. js语句
   - 运行时相关概念
-
+      
   - 简单语句和复合语句
 
   - 声明

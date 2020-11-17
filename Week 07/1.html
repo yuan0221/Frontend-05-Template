@@ -1,0 +1,54 @@
+<script>
+  // String 和 Number 类型互转
+  // 1. 原生api
+  // Number 转 String
+  let num = 1;
+  String(num); // "1"
+  num.toString(); // "1"
+
+  // String 转 Number
+  let s1 = '1.2';
+  let s2 = 'a1.2';
+  let s3 = '1.2a';
+  console.log(Number(s1)); // 1.2
+  console.log(parseInt(s1)); // 1
+  console.log(parseFloat(s1)); // 1.2
+  console.log(Number(s2)); // NAN
+  console.log(parseInt(s2)); // NAN
+  console.log(parseFloat(s2)); // NaN
+  console.log(Number(s3)); // NAN
+  console.log(parseInt(s3)); // 1
+  console.log(parseFloat(s3)); // 1.2
+
+  // 2. 原生js实现
+  function stringToNumber(str) {
+    let HEXNumbers = "0123456789abcdef";
+    let OCTNumbers = "01234567";
+    let BINNumbers = "01";
+    let num = 0;
+    let type = null;
+    let typeNumbers = null;
+    if(str.startsWith("0x")) {
+      type = 16;
+      typeNumbers = HEXNumbers;
+    }
+    if(str.startsWith("0o")) {
+      type = 8;
+      typeNumbers = OCTNumbers;
+    }
+    if(str.startsWith("0b")) {
+      type = 2;
+      typeNumbers = BINNumbers;
+    }
+
+    for(let i = str.length - 1; i >= 2; i--) {
+      const v = str[i];
+      num += typeNumbers.indexOf(v) * type ** (str.length - 1 - i);
+    }
+    return num;
+  }
+  console.log(stringToNumber("0xff")); //255
+  console.log(stringToNumber("0o11")); //9
+  console.log(stringToNumber("0b11")); //3
+  
+</script>
