@@ -109,8 +109,41 @@
 
 ## 2. js语句
   - 运行时相关概念
-      
+      - Completion Record 完成记录 
+        - \[[type]]: normol, break, continue, return, throw
+        - \[[value]]: 基本类型
+        - \[[target]]: label
+        - 例子
+          ```
+            if(x == 1)
+              return 10;
+          ```
   - 简单语句和复合语句
+    - 简单语句
+      - ExpressionStatement 表达式语句
+      - EmptyStatement 空语句
+      - DebuggerStament 调试语句
+      - ThrowStatement 
+      - ContinueStatement
+      - BreakStatement
+      - ReturnStatement
+      - 总结：表达式语句是js核心驱动语句，后四种是流程控制语句，js的作用是让计算机完成计算，和流程控制
+    - 复合语句
+      - BlockStatement  
+      - ifStatement
+      - SwichStatement  
+        - 在C++和C中比if性能好，在js中建议用if代替swith
+      - InterationStatement 循环语句
+        - while
+        - do while
+        - for
+        - for in
+        - for of
+      - WithStatement
+      - LabelledStatement
+        - 语句名字，配合循环语句使用
+      - TryStatement
+        - try catch finally
 
   - 声明
 

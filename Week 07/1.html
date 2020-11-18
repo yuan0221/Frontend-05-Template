@@ -2,9 +2,12 @@
   // String 和 Number 类型互转
   // 1. 原生api
   // Number 转 String
-  let num = 1;
-  String(num); // "1"
-  num.toString(); // "1"
+  let num = 17;
+  String(num); // "17"
+  num.toString(); // "17"
+  num.toString(2); // "10001"
+  num.toString(8); // "21"
+  num.toString(16); // "11"
 
   // String 转 Number
   let s1 = '1.2';
