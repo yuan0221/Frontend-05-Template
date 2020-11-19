@@ -146,8 +146,52 @@
         - try catch finally
 
   - 声明
+    - 类型
+      - FunctionDeclaration
+      - GeneratorDeclaration
+      - AsyncFunctionDeclaration
+      - AsyncGeneratorDeclaration
+      - VariableStatement
+      - ClassDeclaration
+      - LexicalDeclaration
+    - 例子
+      - 老版本
+        - function
+        - function *
+        - async function
+        - async function*
+        - var
+      - 新规范
+        - class
+        - const 
+        - let
+      
+  - 预处理 pre-process
+    - 例子
+      ```
+        var a = 2;
+        void funciton() {
+          a = 1;
+          return;
+          var a;
+        }();
+        console.log(a); //2
+
+
+        var a = 2;
+        void funciton() {
+          a = 1;
+          return;
+          const a;
+        }();
+        console.log(a); //抛错
+      ```
 
 ## 3. js结构化
-  - 宏任务和微任务
-
+  - 宏任务
+    - 宏任务是传给javascript引擎的任务
+  - 微任务
+    - 微任务是javascript引擎内部的任务
+    - 在js中只有promise会产微任务
   - js函数调用
+    - 
