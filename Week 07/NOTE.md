@@ -194,4 +194,17 @@
     - 微任务是javascript引擎内部的任务
     - 在js中只有promise会产微任务
   - js函数调用
-    - 
+    - 例子
+      ```
+        import { foo } from 'foo.js';
+        var i = 0;
+        console.log(i);
+        foo();
+        console.log(i);
+        i++;
+
+        function foo() {
+          console.log(i);
+        }
+        export foo;
+      ```
