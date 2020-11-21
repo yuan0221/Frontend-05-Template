@@ -9,10 +9,8 @@
   <div id="container"></div>
   <script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.g6-3.1.1/build/g6.js"></script>
 <script>
-  let getRealm = () => {
+  const getRealm = () => {
     let set = new Set();
-    let map = new Map();
-
     let objects = [
       eval,
       isFinite,
@@ -62,58 +60,39 @@
       Math,
       Reflect
     ];
-    objects.forEach(o => map.set(o, window[o]));
+    objects.forEach(o => set.add(o));
+
+    for(var i = 0; i < objects.length; i++) {
+      var o = objects[i]
+      for(var p of Object.getOwnPropertyNames(o)) {
+        var d = Object.getOwnPropertyDescriptor(o, p)
+        if( (d.value !== null && typeof d.value === "object") || (typeof d.value === "function"))
+          if(!set.has(d.value))
+            set.add(d.value), objects.push(d.value);
+        if( d.get )
+          if(!set.has(d.get))
+            set.add(d.get), objects.push(d.get);
+        if( d.set )
+          if(!set.has(d.set))
+            set.add(d.set), objects.push(d.set);
+      }
+    }
+
+    console.log(objects);
 
     let realm = {
       id: 'realm',
-      children: objects.map(o => {
-        return {
+      children: objects.map(o => ({
           id: o,
           children: []
-        }
-      })
-    }
-    let queue = [...realm.children];
-    while(queue.length){
-      let child = queue.shift();
-      let id = child.id;
-      console.log(map);
-      console.log(id);
-      let object = map.get(id);
-
-      if(set.has(object)) 
-        continue;
-      set.add(object);
-      for(let p of Object.getOwnPropertyNames(object)) {
-        let d = Object.getOwnPropertyDescriptor(object, p);
-        let pushChild = (type = 'value') => {
-          let uid = type === 'value' ? `${id}.${p}` : `${id}.${p}.[${type}]`;
-          let o = {
-            id: uid,
-            children: []
-          }
-          map.set(uid, d[type]);
-          child.children.push(o);
-          queue.push(o);
-        }
-        if( (d.value !== null && typeof d.value === "object") || (typeof d.value === "function"))
-          pushChild();
-        if( d.get )
-          pushChild('get');
-        if( d.set )
-          pushChild('set');
-      }
+        }))
     }
     return realm;
   }
   
-
-  let render = data => {
-    let container = document.getElementById('container');
-    let width = container.scrollWidth;
-    let height = container.scrollHeight;
-    var graph = new G6.TreeGraph({
-      container: 'mountNode',
+  const render = data => {
+    const graph = new G6.TreeGraph({
+      container: 'container',
       width: window.innerWidth,
       height: window.innerHeight,
       pixelRatio: 2,
