@@ -14,53 +14,53 @@
     let map = new Map();
 
     let objects = [
-      eval,
-      isFinite,
-      isNaN,
-      parseFloat,
-      parseInt,
-      decodeURI,
-      decodeURIComponent,
-      encodeURI,
-      encodeURIComponent,
-      Array,
-      Date,
-      RegExp,
-      Promise,
-      Proxy,
-      Map,
-      WeakMap,
-      Set,
-      WeakSet,
-      Function,
-      Boolean,
-      String,
-      Number,
-      Symbol,
-      Object,
-      Error,
-      EvalError,
-      RangeError,
-      ReferenceError,
-      SyntaxError,
-      TypeError,
-      URIError,
-      ArrayBuffer,
-      SharedArrayBuffer,
-      DataView,
-      Float32Array,
-      Float64Array,
-      Int8Array,
-      Int16Array,
-      Int32Array,
-      Uint8Array,
-      Uint16Array,
-      Uint32Array,
-      Uint8ClampedArray,
-      Atomics,
-      JSON,
-      Math,
-      Reflect
+      'eval',
+      'isFinite',
+      'isNaN',
+      'parseFloat',
+      'parseInt',
+      'decodeURI',
+      'decodeURIComponent',
+      'encodeURI',
+      'encodeURIComponent',
+      'Array',
+      'Date',
+      'RegExp',
+      'Promise',
+      'Proxy',
+      'Map',
+      'WeakMap',
+      'Set',
+      'WeakSet',
+      'Function',
+      'Boolean',
+      'String',
+      'Number',
+      'Symbol',
+      'Object',
+      'Error',
+      'EvalError',
+      'RangeError',
+      'ReferenceError',
+      'SyntaxError',
+      'TypeError',
+      'URIError',
+      'ArrayBuffer',
+      'SharedArrayBuffer',
+      'DataView',
+      'Float32Array',
+      'Float64Array',
+      'Int8Array',
+      'Int16Array',
+      'Int32Array',
+      'Uint8Array',
+      'Uint16Array',
+      'Uint32Array',
+      'Uint8ClampedArray',
+      'Atomics',
+      'JSON',
+      'Math',
+      'Reflect',
     ];
     objects.forEach(o => map.set(o, window[o]));
 
@@ -77,9 +77,8 @@
     while(queue.length){
       let child = queue.shift();
       let id = child.id;
-      console.log(map);
-      console.log(id);
       let object = map.get(id);
+      console.log(object);
 
       if(set.has(object)) 
         continue;
@@ -109,11 +108,8 @@
   
 
   let render = data => {
-    let container = document.getElementById('container');
-    let width = container.scrollWidth;
-    let height = container.scrollHeight;
     var graph = new G6.TreeGraph({
-      container: 'mountNode',
+      container: 'container',
       width: window.innerWidth,
       height: window.innerHeight,
       pixelRatio: 2,
