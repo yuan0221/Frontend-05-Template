@@ -19,3 +19,5 @@
     - 状态机字符串中找到'abcdef'
     - 状态机字符串中找到'abcabx'
     - 状态机字符串中找到'abababx'
+    - KMP算法匹配未知pattern
+      - [参考链接](https://github.com/Ele-Peng/Frontend-01-Template/blob/master/week06/%E5%9F%BA%E4%BA%8EKMP%E7%9A%84FSM%E5%8C%B9%E9%85%8D%E5%AD%97%E7%AC%A6%E4%B8%B2.md)
