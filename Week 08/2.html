@@ -1,0 +1,59 @@
+<script>
+  // 4.使用状态机在字符串中找到'abcdef'
+  // reConsume
+  function match(str) {
+    let state = start;
+    for(let s of str) {
+      state = state(s);
+    }
+    return state === end;
+  }
+
+  function start (s) {
+    if(s === 'a')
+      return foundA;
+    else 
+      return start;
+  }
+
+  function foundA(s) {
+    if(s === 'b')
+      return foundB;
+    else 
+      return start(s);
+  }
+
+  function foundB(s) {
+    if(s === 'c')
+      return foundC;
+    else 
+      return start(s);
+  }
+
+  function foundC(s) {
+    if(s === 'd')
+      return foundD;
+    else 
+      return start(s);
+  }
+
+  function foundD(s) {
+    if(s === 'e')
+      return foundE;
+    else 
+      return start(s);
+  }
+
+  function foundE(s) {
+    if(s === 'f')
+      return end;
+    else 
+      return start(s);
+  }
+
+  function end () {
+    return end;
+  }
+
+  console.log(match('xxxababcdefhhh'));  //true
+</script>

@@ -1,0 +1,73 @@
+<script>
+  // 5.使用状态机在字符串中找到'abcabx'
+  // reConsume
+  function match(str) {
+    let state = start;
+    for(let s of str) {
+      state = state(s);
+    }
+    return state === end;
+  }
+
+  function start (s) {
+    if(s === 'a')
+      return foundA;
+    else 
+      return start;
+  }
+
+  function foundA(s) {
+    if(s === 'b')
+      return foundB;
+    else 
+      return start(s);
+  }
+
+  function foundB(s) {
+    if(s === 'c')
+      return foundC;
+    else 
+      return start(s);
+  }
+
+  function foundC(s) {
+    if(s === 'a')
+      return foundA2;
+    else 
+      return start(s);
+  }
+
+  function foundD(s) {
+    if(s === 'e')
+      return foundE;
+    else 
+      return start(s);
+  }
+
+  function foundE(s) {
+    if(s === 'f')
+      return end;
+    else 
+      return start(s);
+  }
+
+  function end () {
+    return end;
+  }
+
+  function foundA2(s) {
+    if(s === 'b')
+      return foundB2;
+    else 
+      return start(s);
+  }
+
+  function foundB2(s) {
+    if(s === 'x')
+      return end;
+    else 
+      return foundB(s);
+  }
+
+  console.log(match('abcabcabx'));  //true
+</script>

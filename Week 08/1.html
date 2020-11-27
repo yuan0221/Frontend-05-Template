@@ -1,0 +1,62 @@
+<script>
+  // 1.字符串中找到'a',for in循环
+  function matchA(str) {
+    let foundA = false;
+    for(let s of str) {
+      if(s === 'a')
+        foundA = true;
+    }
+    return foundA;
+  }
+  console.log('matchA', matchA('ssadd'));  //true
+
+
+  // 2. 字符串中找到'ab',不使用正则
+  function matchAB(str) {
+    let foundA = false;
+    for(let s of str) {
+      if(s === 'a')
+        foundA = true;
+      else if(foundA && s === 'b')
+        return true;
+      else 
+        foundA = false; 
+    }
+    return false;
+  }
+  console.log('matchAB', matchAB('ssabd'));  //true
+
+
+  // 3.字符串中找到'abcdef',不使用正则
+  function matchABCDEF(str) {
+    let foundA = false;
+    let foundB = false;
+    let foundC = false;
+    let foundD = false;
+    let foundE = false;
+    for(let s of str) {
+      if(s === 'a')
+        foundA = true;
+      else if(foundA && s === 'b')
+        foundB = true;
+      else if(foundB && s === 'c')
+        foundC = true;
+      else if(foundC && s === 'd')
+        foundD = true;
+      else if(foundD && s === 'e')
+        foundE = true;
+      else if(foundE && s === 'f')
+        return true;
+      else {
+        foundA = false; 
+        foundB = false; 
+        foundC = false; 
+        foundD = false; 
+        foundE = false; 
+      }
+    }
+    return false;
+  }
+  console.log('matchABCDEF', matchABCDEF('xxxabcdefhhh'));  //true 
+
+</script>
