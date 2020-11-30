@@ -21,3 +21,28 @@
     - 状态机字符串中找到'abababx'
     - KMP算法匹配未知pattern
       - [参考链接](https://github.com/Ele-Peng/Frontend-01-Template/blob/master/week06/%E5%9F%BA%E4%BA%8EKMP%E7%9A%84FSM%E5%8C%B9%E9%85%8D%E5%AD%97%E7%AC%A6%E4%B8%B2.md)
+
+## 3. ISO-OSI 七层网络模型
+  - 应用层
+  - 表示层
+  - 会话层      1，2，3层为HTTP层     require('http')
+  - 传输层      4层为TCP
+  - 网络层      5层为Internet        require('net')
+  - 数据链路层
+  - 物理层      6，7层为4G/5G/WIFI
+
+## 4. TCP & IP
+  - TCP
+    - 流
+    - 端口
+    - require('net')
+  - IP
+    - 包
+    - IP地址
+    - Libnet/Libpcap
+
+## 5. HTTP
+  - Request
+  - Response
+
+  
