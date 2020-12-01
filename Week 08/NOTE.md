@@ -45,4 +45,26 @@
   - Request
   - Response
 
+  - 第一步HTTP请求总结
+    - 设计HTTP请求的类
+    - Content-Type是一个必要字段，要有默认值
+    - body是KV格式
+    - 不同的Content-Type影响body的格式
+
+  - 第二步send函数总结
+    - 在Request构造器中收集必要的信息
+    - 设计send函数，将请求真实发送到服务器
+    - send函数是异步的，返回Promise
   
+  - 第三步发送请求
+    - 支持已有的connection或者自己新建的connection
+    - 收到数据传给parser
+    - 根据parser的状态，resolve promise
+   
+  - 第四步ResponseParser总结
+    - Response必须分段构造，使用ResponseParser来’装配‘
+    - ResponseParser分段处理ResponseText，利用状态机分析文本的结构
+
+  - 第五步 BodyParser总结
+    - Response的body可能根据Content-Type有不同的结构，因此采用子Parser的结构解决问题
+    - 以TrunkedBodyParser为例，使用状态机处理body的格式
