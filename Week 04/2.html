@@ -1,4 +1,7 @@
 <script>
+  // Kmp算法在字符串中找到任意pattern的字符
+
+
   function Kmp (source, pattarn) {
     // 部分匹配表
     let table = new Array(pattarn.length).fill(0);
@@ -38,4 +41,9 @@
   }
 
   console.log(Kmp('aabaaadxxx', 'aabaaac'));
+
+
+
+
+  // TODO 字符串分析算法 Wildcard
 </script>
