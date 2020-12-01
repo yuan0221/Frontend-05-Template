@@ -12,7 +12,7 @@ http.createServer((req, res) => {
     console.log(body);
     res.writeHead(200, {'Content-Type': 'text/html'})
     // trunk body
-    res.end('test')
+    res.end(' Hello World\n')
   });
 }).listen(8088)
 
