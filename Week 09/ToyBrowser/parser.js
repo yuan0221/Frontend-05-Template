@@ -26,6 +26,7 @@ function emit(token) {
     }
 
     top.children.push(element);
+    // 建立父子关系，不理解？
     element.parent = top;
 
     if(!token.isSelfClosing) 
@@ -37,6 +38,10 @@ function emit(token) {
     if(top.tagName !== token.tagName) {
       throw new Error("Tag start end doesn't match!");
     } else {
+      // 遇到style标签，执行添加css规则的操作
+      if(top.tagName === 'style') {
+        addCSSRules(top.children[0].content);
+      }
       stack.pop();
     }
     currentTextNode = null;
