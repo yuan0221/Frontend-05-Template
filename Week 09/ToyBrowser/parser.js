@@ -10,6 +10,8 @@ const EOF = Symbol('EOF');  //EOF: End Of File
 
 function data(c) {
   if(c === '<') {
+    // <html>
+    // 调试看到tagOpen不把c传出去，这样下次进来的字符就是从'h'开始
     return tagOpen;
   } else if(c == EOF) {
     emit({
@@ -27,6 +29,8 @@ function data(c) {
 
 function tagOpen(c) {
   if(c === '/') {
+    // </html>
+    // endTagOpen不把c传出去，这样下次进来的字符就是从'h'开始
     return endTagOpen;
   } else if(c.match(/^[a-zA-Z]$/)) {
     currentToken = {
@@ -216,9 +220,9 @@ function UnquotedAttributeValue(c) {
 function selfClosingStartTag(c) {
   if(c === '>') {
     currentToken.isSelfClosing = true;
-    // emit(currentToken);
+    emit(currentToken);
     return data;
-  }  else if(c == 'EOF') {
+  }  else if(c == EOF) {
 
   } else {
 
