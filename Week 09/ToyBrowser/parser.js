@@ -1,8 +1,119 @@
+const css = require('css');
+
 let currentToken = null;
 let currentAttribute = null;
 
 let stack = [{type: 'document', children: []}];
 let currentTextNode = null;
+
+
+// addCSSRule函数，把css规则暂存到一个数组里
+let rules = [];
+function addCSSRules(text) {
+  var ast = css.parse(text);
+  rules.push(...ast.stylesheet.rules);
+}
+
+
+function computeCSS(element) {
+  // console.log(rules);
+  // console.log("compute CSS for Element", element);
+  // 获取父元素
+  var elements = stack.slice().reverse();
+  if(!element.computedStyle) {
+    element.computedStyle = {};
+  }
+
+  function specificity(selector) {
+    var p = [0, 0, 0, 0];
+    var selectorParts = selector.split(' ');
+    for(var part of selectorParts) {
+      if(part.charAt(0) === '#') {
+        p[1] += 1;
+      } else if(part.charAt(0) === '.') {
+        p[2] += 1;
+      } else {
+        p[3] += 1;
+      }
+    }
+    return p;
+  }
+
+  function compare(sp1, sp2) {
+    if(sp1[0] - sp2[0]) 
+      return sp1[0] - sp2[0];
+    if(sp1[1] - sp2[1]) 
+      return sp1[1] - sp2[1];
+    if(sp1[2] - sp2[2]) 
+      return sp1[2] - sp2[2];
+
+    return sp1[3] - sp2[3];
+  }
+
+  for(let rule of rules) {
+    // 按空格分割选择器
+    var selectorParts = rule.selectors[0].split(" ").reverse();
+
+    if(!match(element, selectorParts[0])) 
+      continue;
+
+    let matched = false;
+
+    var j = 1;
+    for(var i = 0; i < elements.length; i++) {
+      if(match(elements[i], selectorParts[j])) {
+        j++;
+      }
+    }
+
+    if(j >= selectorParts.length) 
+      matched = true;
+
+    if(matched) {
+      // 如果匹配到，加入
+      // console.log("Element", element, "matched rule", rule);
+
+      var sp = specificity(rule.selectors[0]);
+      var computedStyle = element.computedStyle;
+
+
+      for(var declaration of rule.declarations) {
+        if(!computedStyle[declaration.property]) 
+          computedStyle[declaration.property] = {};
+
+        if(!computedStyle[declaration.property].specificity) {
+          computedStyle[declaration.property].value = declaration.value;
+          computedStyle[declaration.property].specificity = sp;
+        } else if(compare(computedStyle[declaration.property].specificity, sp) < 0) {
+          computedStyle[declaration.property].value = declaration.value;
+          computedStyle[declaration.property].specificity = sp;
+        }
+      }
+
+      console.log(element.computedStyle);
+    }
+  }
+}
+
+
+function match(element, selector) {
+  if(!selector || !element.attributes) 
+    return false;
+
+  if(selector.charAt(0) === '#') {
+    var attr = element.attributes.filter(attr => attr.name === 'id')[0]
+    if(attr && attr.value === selector.replace('#', '')) 
+      return true;
+  } else if(selector.charAt(0) === '.') {
+    var attr = element.attributes.filter(attr => attr.name === 'class')[0]
+    if(attr && attr.value === selector.replace('.', '')) 
+      return true;
+  } else {
+    if(element.tagName === selector)
+      return true;
+  }
+  return false;
+}
 
 function emit(token) {
 
@@ -25,8 +136,10 @@ function emit(token) {
       }
     }
 
+    computeCSS(element);
+
     top.children.push(element);
-    // 建立父子关系，不理解？
+    // 建立父子关系，  便于后续获取一个元素的所有父元素
     element.parent = top;
 
     if(!token.isSelfClosing) 
@@ -39,6 +152,7 @@ function emit(token) {
       throw new Error("Tag start end doesn't match!");
     } else {
       // 遇到style标签，执行添加css规则的操作
+      // link标签，import样式忽略，只考虑内联，和style标签
       if(top.tagName === 'style') {
         addCSSRules(top.children[0].content);
       }
