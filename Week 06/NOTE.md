@@ -6,7 +6,13 @@
   - 1型 上下文相关文法
   - 2型 上下文无关文法
   - 3型 正则文法
-  - TODO 语言分类
+  - 形式语言分类
+    - 按用途
+      - 数据描述语言  JSON，HTML，XML，CSS，SQL
+      - 编程语言     JavaScript、Java、PHP、Rube、Python、C、C++、C#  
+    - 按表达方式
+      - 声明式   JSON，HTML，XML，CSS，SQL
+      - 命令式   JavaScript、Java、PHP、Rube、Python、C、C++、C#
 
 ## 2. 产生式
 - 描述方法

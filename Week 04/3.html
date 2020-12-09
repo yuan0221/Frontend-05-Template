@@ -1,0 +1,63 @@
+<script>
+    // 字符串分析算法 Wildcard
+    
+    
+
+
+    function find(source, pattern) {
+      // 计算总共有多少星号
+      let startCount = 0;
+      for(let i = 0; i < pattern.length; i++) {
+        if(pattern[i] === '*')
+          startCount ++;
+      }
+
+      // 如果一个星号都没有，则严格匹配
+      if(startCount === 0) {
+        for(let i = 0; i < pattern.length; i++) {
+          if(pattern[i] !== source[i] && pattern[i] !== '?') 
+            return false;
+        }
+        return;
+      }
+
+
+      // 1.***********匹配第一个*号之前的字符串***************
+      let i = 0;  //pattern的位置
+      let lastIndex = 0; //source的位置
+      for(i = 0; pattern[i] !== '*'; i++) {
+        if(pattern[i] !== source[i] && pattern[i] !== '?')
+          return false;
+      }
+      lastIndex = i;  //lastIndex更新到i
+
+
+      // 2. ***************匹配最后一个*号之前的字符串*************
+      for(let p = 0; p < startCount - 1; p++) {
+        i++;
+        let subPattern = '';
+        while(pattern[i] !== '*') {
+          subPattern += pattern[i];
+          i++;
+        }
+        // 将两个*号之间的字符替换成正则语法
+        let reg = new RegExp(subPattern.replace(/\?/g, '[\\s\\S]'), 'g');
+        reg.lastIndex = lastIndex;  //lastIndex 决定exec从哪个位置开始
+        if(!reg.exec(source))
+          return false;
+        // console.log(reg.exec(source));
+        lastIndex = reg.lastIndex;
+      }
+
+
+      // 3.***********匹配最后一个*号之后的字符**************
+      for(let j = 0; j <= source.length - lastIndex && pattern[pattern.length - j] !== '*'; j++) {
+        if(pattern[pattern.length - j] !== source[source.length - j]
+            && pattern[pattern.length - j] !== '?')
+            return false;
+      }
+      return true;
+    }
+
+    console.log(find('abcabcabxaac', 'a*b*bx*c'));
+</script>
