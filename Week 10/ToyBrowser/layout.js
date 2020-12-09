@@ -2,7 +2,7 @@ function getStyle(element) {
   if(!element.style)
     element.style = {};
 
-  for(let prop of element.computedStyle) {
+  for(let prop in element.computedStyle) {
     var p = element.computedStyle.value;
     element.style[prop] = element.computedStyle[prop].value;
 
@@ -114,9 +114,8 @@ function layout(element) {
     elementStyle[mainSize] = 0;
     for(var i = 0; i < items.length; i++) {
       var item = items[i];
-      // TODO 
-      if(itemStyle[mainSize] !== null || itemStyle[mainSize])
-        itemStyle[mainSize] = itemStyle[mainSize]
+      if(itemStyle[mainSize] !== null || itemStyle[mainSize] !== (void 0))
+        style[mainSize] = itemStyle[mainSize] + elementStyle[mainSize];
     }
     isAutoMainSize = true;
   }
@@ -332,7 +331,7 @@ function layout(element) {
 
 
 
-  console.log(items)
+  // console.log(items)
 }
 
 
