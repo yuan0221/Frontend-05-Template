@@ -23,11 +23,35 @@
 
 
 
-  // TODO 用 JavaScript 去设计狗咬人的代码
+  // 用 JavaScript 去设计狗咬人的代码
+  class Human {
+    constructor(name, health = 100) {
+      this.name = name;
+      this.health = health;
+    }
+    hurt(damage) {
+      this.health -= damage;
+      console.log(`还剩能量：${this.health}`);
+      if(this.health <= 0) 
+        console.log(`You was dead！`);
+    }
+  }
 
+  class Dog {
+    constructor(name, damage = 10) {
+      this.name = name;
+      this.damage = damage;
+    }
+    bite() {
+      return this.damage;
+    }
+  }
 
+  let person = new Human('小明');
+  let dog = new Dog('小狗');
 
+  person.hurt(dog.bite());
+  person.hurt(dog.bite());
+  person.hurt(dog.bite());
 
-
-  // TODO 找出 JavaScript 标准里面所有具有特殊行为的对象
 </script>
