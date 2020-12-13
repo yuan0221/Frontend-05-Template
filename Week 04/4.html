@@ -1,0 +1,39 @@
+<script>
+
+const str = 'The quick brown fox jumps over the lazy {1}. If the dog reacted, was it really lazy {2}?';
+const regExp = /{\d}/g;
+console.log(str.replace(regExp, function(target) {
+  if(target === '{1}') 
+    return '1';
+  if(target === '{2}')
+    return '2';
+}));
+console.log('---------------');
+
+
+const str1 = "Apples are round, and apples are juicy.";
+const regExp1 = /apples/gi;
+const newstr1 = str1.replace(regExp1, "orange");
+console.log(newstr1);
+console.log('---------------');
+
+
+const str2 = 'William Yuan';
+const regExp2 = /(\w+)\s(\w+)/;
+const newstr2 = str2.replace(regExp2, "$2------$1");
+console.log(newstr2);
+console.log('---------------');
+
+
+function format(str) {
+  // 转连字符，转驼峰，在这里尽情发挥！
+  function upperToHyphenLower(match) {
+    return match.trim().toUpperCase();
+  }
+  return str.replace(/\s\w/g, upperToHyphenLower);
+}
+console.log(format('william yuan'));
+
+
+
+</script>
