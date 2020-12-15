@@ -1,1 +1,37 @@
-学习笔记
+- CSS(Cascading Style Sheet 级联样式表)
+  - at-rules
+    - @charset
+    - @import
+    - @media (重要)
+    - @page
+    - @counter-style
+    - @keyframes (重要)
+    - @fontface (重要)
+    - @support
+    - @namespace
+  - rule
+    - Selector
+      - selector_group
+      - selector
+        - >
+        - <sp>
+        - +
+        - ~
+      - simple_selector
+        - type
+        - *
+        - .
+        - #
+        - []
+        - :
+        - ::
+        - :not()
+    - Declaration
+      - Key
+        - variables
+        - properties
+      - value
+        - calc
+        - number
+        - length
+        - ...
