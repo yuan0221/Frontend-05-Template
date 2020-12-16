@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="id2" class="class2 cls2">
+    <div id='id1' class='class1 cls1'>
+      <div id='id' class='class cls'></div>
+    </div>
+  </div>
+</body>
+<script>
+
+/*   编写一个 match 函数。它接收两个参数，第一个参数是一个选择器字符串性质，
+  第二个是一个 HTML 元素。这个元素你可以认为它一定会在一棵 DOM 树里面。
+  通过选择器和 DOM 元素来判断，当前的元素是否能够匹配到我们的选择器。
+  （不能使用任何内置的浏览器的函数，仅通过 DOM 的 parent 和 children 这些 API，
+  来判断一个元素是否能够跟一个选择器相匹配。）以下是一个调用的例子。 */
+
+  
+  function match(selector, element) {
+    let selectorList = selector.split(' ');
+    let elementList = [];
+    // 使用正则分组查找单个简单选择器
+    const re = /(\#\w+)|(\.\w+)|(\w+)/g;
+
+    for (let i = 0; i < selectorList.length; i++) {
+      elementList.push(selectorList[i].match(re));
+    }
+
+    let match = true;
+    // 从html结构由里向外找父节点
+    for (let i = elementList.length - 1; i >= 0; i--) {
+      if (!currentElementMatch(elementList[i], element)) {
+        // 如果有一个选择器没有匹配上，则跳出循环，match置为false
+        match = false;
+        break;
+      }
+      // 当前要检查的元素往外走一层
+      element = element.parentNode;
+    }
+    return match;
+  }
+
+  function currentElementMatch(currentSelector, currentElement) {
+    let hasId = false, hasClass = false, hasTag = false;
+    let idMatch = false, classMatch = false, tagMatch = false;
+
+    for (let i = 0; i < currentSelector.length; i++) {
+      if (currentSelector[i].charAt(0) === '#') {
+        hasId = true;
+        if (currentElement.id === currentSelector[i].slice(1)) {
+          idMatch = true;
+        }
+      } else if (currentSelector[i].charAt(0) === '.') {
+        hasClass = true;
+        // 由于类名可以多个，每次进来一个class，先要将classMatch置为false
+        classMatch = false;
+        // 再检查html元素上的classList是否包含这次进来的class，如果包含再将classMatch置为true
+        for (let j = 0; j < currentElement.classList.length; j++) {
+          if (currentElement.classList[j] === currentSelector[i].slice(1)) {
+            classMatch = true;
+            break;
+          }
+        }
+      } else {
+        hasTag = true;
+        if (currentElement.tagName.toLowerCase() === currentSelector[i]) {
+          tagMatch = true;
+        }
+      }
+    }
+
+    return ((hasId && idMatch) || !hasId) &&
+      ((hasClass && classMatch) || !hasClass) &&
+      ((hasTag && tagMatch) || !hasTag);
+  }
+
+  const ret = match('div #id.class', document.getElementById('id'));
+  console.log(ret);
+</script>
+
+</html>
