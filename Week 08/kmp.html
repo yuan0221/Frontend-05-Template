@@ -1,64 +1,67 @@
 <script>
   // 使用Kmp算法，结合状态机在字符串中找到任意pattern的字符
 
-  
-  function genPMT(pattern) {
-  let table = Array(pattern.length).fill(0);
-  let i = 1;
-  let j = 0;
-  while(i < pattern.length - 1) {
-    if (pattern[i] === pattern[j]) {
-      table[++i] = ++j;
-    } else {
-      if (j > 0) {
-        j = table[j];
+
+  function getTable(pattern) {
+    // 计算跳转表格
+    let table = new Array(pattern.length).fill(0);
+
+    // i表示pattern串的索引, j表示pattern串，从起点到索引i之前的自重复的最大长度
+    // a a b a a a c   
+    // 0 0 1 0 1 2 2    j
+    let i = 1, j = 0;
+    while (i < pattern.length) {
+      if (pattern[i] === pattern[j]) {
+        ++i, ++j;
+        table[i] = j;
       } else {
-        i++;
+        if (j > 0) j = table[j];
+        else ++i;
       }
     }
-  }
-  return table;
-}
-
-console.log(genPMT('aabaaaca'));
-
-function genStateFunc(pattern) {
-  if (pattern.length === 0) {
-    return false;
+    console.log(table); // 0 0 1 0 1 2 2 
+    return table;
   }
 
-  const funcTable = Array(pattern.length);
-  const kmpTable = genPMT(pattern);
-  for (let i = 0; i < pattern.length; i++) {
-    const c = pattern[i];
-    funcTable[i] = function(w) {
-      if (w === c) {
-        return i === pattern.length - 1 ? end : funcTable[i + 1];
-      } else {
-        if (i === 0) {
-          return funcTable[0];
+  function genStateFunc(pattern) {
+    if (pattern.length === 0) {
+      return false;
+    }
+
+    const funcTable = Array(pattern.length);
+    const kmpTable = getTable(pattern);
+    for (let i = 0; i < pattern.length; i++) {
+      const c = pattern[i];
+      funcTable[i] = function (w) {
+        if (w === c) {
+          return i === pattern.length - 1 ? end : funcTable[i + 1];
+        } else {
+          if (i === 0) {
+            return funcTable[0];
+          }
+          if (kmpTable[i]) {
+            return funcTable[kmpTable[i]](w);
+          }
+          return funcTable[0](w);
         }
-        if (kmpTable[i]) {
-          return funcTable[kmpTable[i]](w);
-        }
-        return funcTable[0](w);
       }
     }
+    return funcTable;
   }
-  return funcTable;
-}
 
-function end() {
-  return end;
-}
-
-function match(str, pattern) {
-  const funcTable = genStateFunc(pattern);
-  if (!funcTable) return false;
-  let state = funcTable[0];
-  for (let c of str) {
-    state = state(c);
+  function end() {
+    return end;
   }
-  return state === end;
-}
+
+  function match(str, pattern) {
+    const funcTable = genStateFunc(pattern);
+    if (!funcTable) return false;
+    let state = funcTable[0];
+    for (let c of str) {
+      state = state(c);
+    }
+    return state === end;
+  }
+
+  console.log(match('aabaaaabaaacadxxx', 'aabaaac'));
 </script>

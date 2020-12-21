@@ -12,15 +12,6 @@
   - 状态机是有限状态机的简称，是现实事物运行规则抽象而成的一个数学模型。
   - 每一个状态都是一个机器，每一个机器用函数表示就是一个纯函数。
   - e.g: 自动售货机
-  - 作业：
-    - 字符串中找到'a',for in循环
-    - 字符串中找到'ab',不使用正则
-    - 字符串中找到'abcdef',不使用正则
-    - 状态机字符串中找到'abcdef'
-    - 状态机字符串中找到'abcabx'
-    - 状态机字符串中找到'abababx'
-    - KMP算法匹配未知pattern
-      - [参考链接](https://github.com/Ele-Peng/Frontend-01-Template/blob/master/week06/%E5%9F%BA%E4%BA%8EKMP%E7%9A%84FSM%E5%8C%B9%E9%85%8D%E5%AD%97%E7%AC%A6%E4%B8%B2.md)
 
 ## 3. ISO-OSI 七层网络模型
   - 应用层

@@ -2,45 +2,45 @@
   // Kmp算法在字符串中找到任意pattern的字符
 
 
-  function Kmp (source, pattarn) {
-    // 部分匹配表
-    let table = new Array(pattarn.length).fill(0);
+  function Kmp (source, pattern) {
+    // 计算跳转表格
+    let table = new Array(pattern.length).fill(0);
 
-    // i表示pattarn串的索引, j表示pattarn串，从起点到索引i（包含）之前的匹配的最大长度
+    // i表示pattern串的索引, j表示pattern串，从起点到索引i之前的自重复的最大长度
     // a a b a a a c   
-    // 0 1 0 1 2 2 0    j
+    // 0 0 1 0 1 2 2    j
     {
       let i = 1, j = 0;
-      while(i < pattarn.length) {
-        if(pattarn[i] === pattarn[j]) {
+      while(i < pattern.length) {
+        if(pattern[i] === pattern[j]) {
           ++i, ++j;
-          table[i - 1] = j;
+          table[i] = j;
         } else {
-          if(j > 0) j = table[j - 1];
+          if(j > 0) j = table[j];
           else ++i;
         }
       }
-      console.log(table); // 0 1 0 1 2 2 0 
+      console.log(table); // 0 0 1 0 1 2 2 
     }
 
     {
-      // i表示source位置, j表示pattarn位置
+      // i表示source位置, j表示pattern位置
       let i = 0, j = 0;
       while(i < source.length) {
-        if(source[i] === pattarn[j]) {
+        if(source[i] === pattern[j]) {
           ++i, ++j;
         } else {
-          if(j > 0) j = table[j - 1];
+          if(j > 0) j = table[j];
           else ++i;
         }
-        if(j === pattarn.length) 
+        if(j === pattern.length) 
           return true;
       } 
       return false;
     }
   }
 
-  console.log(Kmp('aabaaadxxx', 'aabaaac'));
+  console.log(Kmp('aabaaaabaaacadxxx', 'aabaaac'));
 
 
 </script>
