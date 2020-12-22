@@ -30,11 +30,27 @@
   - IP
     - 包
     - IP地址
-    - Libnet/Libpcap
+    - Libnet/Libpcap  C++中的两个包
 
 ## 5. HTTP
   - Request
+    - POST / HTTP/1.1      (Request line)
+      Host: 127.0.0.1
+      Content-Type: application/x-www-form-urlencoded  (headers)
+ 
+      filed1=aaa&code=123        (body)  
+
   - Response
+    - HTTP/1.1 200 OK     (status line)
+      Content-Type: text/html
+      Date: Mon, 21 Dec 2020 13:53:12 GMT
+      Content-Length: 0
+      Connection: Keep-alive
+      Transfer-Encoding: chunked   (headers)
+
+      26
+      <html><body>Hello world</body></html>
+      0                                     (chunked body)
 
   - 第一步HTTP请求总结
     - 设计HTTP请求的类

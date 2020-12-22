@@ -8,7 +8,8 @@ http.createServer((req, res) => {
     body.push(chunk);
   }).on('end', () => {
     body = Buffer.concat(body).toString();
-    console.log(body);
+    // 服务端接收到请求body
+    console.log(body);  //name=winter&age=18
     res.writeHead(200, {'Content-Type': 'text/html'})
     res.end(' Hello World\n')
   });

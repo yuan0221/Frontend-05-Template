@@ -35,11 +35,30 @@ class Request {
           port: this.port
         }, () => {
           // 创建成功的回调
+          // 将request写入connection，request的内容如下：
+          // 'POST / HTTP/1.1
+          // X-Foo2: customed
+          // Content-Type: application/x-www-form-urlencoded
+          // Content-Length: 18
+
+          // name=winter&age=18'
           connection.write(this.toString());
         });
       }
       connection.on('data', (data) => {
+        // 接收到response
         console.log(data.toString());
+        // HTTP/1.1 200 OK
+        // Content-Type: text/html
+        // Date: Mon, 21 Dec 2020 14:18:01 GMT
+        // Connection: keep-alive
+        // Keep-Alive: timeout=5
+        // Transfer-Encoding: chunked
+
+        // d
+        // Hello World
+
+        // 0
         parser.receive(data.toString());
         if(parser.isFinished) {
           resolve(parser.response);
@@ -208,4 +227,8 @@ void async function () {
   });
   let response = await request.send();
   console.log(response);
+  // statusCode:'200'
+  // statusText:'OK'
+  // headers:{Content-Type: 'text/html', Date: 'Tue, 22 Dec 2020 01:03:00 GMT', Connection: 'keep-alive', Keep-Alive: 'timeout=5', Transfer-Encoding: 'chunked'}
+  // body:' Hello World\n\r\n'
 }();
