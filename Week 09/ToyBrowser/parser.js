@@ -230,6 +230,11 @@ function endTagOpen(c) {
 }
 
 function tagName(c) {
+  // html中有四种有效的空白符
+  // \t tab符
+  // \n 换行符
+  // \f 走纸换页符
+  // 正常空格
   if(c.match(/^[\t\n\f ]$/)) {
     return beforeAttributeName;
   } else if(c === '/') {
