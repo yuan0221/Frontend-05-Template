@@ -116,10 +116,11 @@ function match(element, selector) {
 }
 
 function emit(token) {
-
+  // 用数组表示栈，栈顶是最后一个元素
   let top = stack[stack.length - 1];  
 
   if(token.type === 'startTag') {
+    // tag是html文本中的带尖括号的东西，背后表示的东西是element，因此dom树中有的是element和node
     let element = {
       type: 'element',
       children: [],
@@ -260,10 +261,12 @@ function beforeAttributeName(c) {
   } else if(c === '=') {
     return beforeAttributeName;
   } else {
+    // 创建一个新的属性currentAttribute，进入attributeName状态
     currentAttribute = {
       name: '',
       value: ''
     }
+    // attributeName将字符c继续处理，reconsume
     return attributeName(c);
   }
 }
