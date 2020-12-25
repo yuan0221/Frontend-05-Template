@@ -214,6 +214,11 @@ void async function () {
   let dom = parser.parseHTML(response.body);
   console.log(dom);
 
+  // 浏览器绘制是用viewport绘制的，有一个视口的概念
+  // 准备图形环境
+  // 因为nodejs没有图形的封装，所以使用生成图片代替，这里使用npm的images包
+  // 这里用800*600的图片代替viewport
+  // 将视口和要绘制的dom元素传进设计的api中
   let viewport = images(800, 600);
   render(viewport, dom);
 

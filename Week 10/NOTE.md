@@ -33,6 +33,7 @@
   - 这里采用npm包images
   - 绘制在一个viewport上进行
   - 与绘制相关的属性：background-color、border、background-images等等。
+  - images包可以绘制background-color、border、background-images，但是gradient（渐变）不行，需要webGL的包。
 
 - ### 第二步
   - 递归调用子元素的绘制方法完成dom树的绘制
