@@ -132,6 +132,8 @@
 - 语法 语义 运行时
 
 
+# JS类型
+
 ## Number
 - js最小单位
   - Atom 原子
@@ -245,7 +247,7 @@
   ```
 
 
-## Object
+## Object的基础知识
 - 概念
   - Object在英语意思是一切物体的统称，中文中的找不到一个词概括表示这个意思，就翻译成了对象，台湾翻译成‘物件‘
   - 在人类最早的认知中，就知道三条一模一样的鱼是三个不同的东西，三个相同的苹果也是三个不同的东西
@@ -301,29 +303,37 @@
     - [[Prototype]]
       - js原生支持原型机制，当我们在一个对象上找一个属性时候，如果对象自身不包含这个属性，则在原型上去找，如果原型的原型不为空，则继续在原型的原型上去找，因此形成一个链式的行为，原型链。
 
-  - 属性是kv对，k是字符串或者symbol
+  - 属性是kv对
+    - k分为两种
+      - k是String时，只要能拿到对象实例，就可以通过k访问到属性
+      - k是Symbol时，Symbol创建后，只能通过变量引用它，即使两个一模一样的Symbol也不相等，只要不把 Symbol 的名字暴露出来，就没办法访问到属性，因此很好的实现了属性访问的权限控制
+    - v有两种形态
+      - 数据属性 Data Property
+        - \[[value]] 7种类型的特征值（attribute）
+        - writeble   是否可写特征值（attribute）
+          - 当将 writeble 设为false后，仅仅是通过.运算不可更改，仍然可以通过 Object.defineproperty 修改 writeble 特征值，强行将数据属性变得可更改
+        - enumerble  是否可枚举特征值（attribute）
+        - configurable 是否可更改特征值（attribute）
+          - 当将 configurable 设为false后，configurable，enumerble，writeble，value都变得不可更改了
+      - 访问器属性 Accessor Property
+        - get 读属性时候调用
+        - set 写属性时候调用
+        - enumerble 
+        - configurable
+
   - javascript用属性统一抽象对象的状态和行为，数据属性描述状态， 访问器属性描述行为，数据属性中值是函数，也可以描述行为
-  - 数据属性
-    - \[[value]] 
-    - writeble 
-    - enumerble 
-    - configurable
-  - 访问器属性
-    - get 
-    - set 
-    - enumerble 
-    - configurable
+  
   - Api/Grammer
-    - 基本面向对象能力
+    - 基本面向对象
       - {}
       - . 
       - [] 
       - Object.defineproperty
-    - 基于原型的对象描述方法
+    - 基于原型
       - Object.create 
       - Object.setPrototypeOf
       - Object.getPrototypeOf  
-    - 基于分类
+    - 基于类
       - new
       - class
       - extends
@@ -331,14 +341,21 @@
       - new
       - function
       - prototype
-    - 特殊行为对象
-      - Array：Array 的 length 属性根据最大的下标自动发生变化。
-      - Object.prototype：作为所有正常对象的默认原型，不能再给它设置原型了。
-      - String：为了支持下标运算，String 的正整数属性访问会去字符串里查找。
-      - Arguments：arguments 的非负整数型下标属性跟对应的变量联动。
-      - 模块的 namespace 对象：特殊的地方非常多，跟一般对象完全不一样，尽量只用于 import
-      - 类型数组和数组缓冲区：跟内存块相关联，下标运算比较特殊
-      - bind 后的 function：跟原来的函数相关联
+
+  - js中的特殊行为对象
+    - 函数对象(Function)
+      - 标准中描述是一个带[[call]]方法的对象，[[]]表示的都是对象的内置行为，在js中没有办法访问到它
+      - typeof的值是function，除了一般对象的属性和原型，函数对象还有一个行为[[call]]
+      - 我们用JavaScript中的function关键字，箭头运算符，或者Function构造器创建的对象，会有[[call]]这个行为
+      - 我们用类似f()这样的语法把对象当做函数调用时，会访问到[[call]]这个行为
+      - 如果对应的对象没有[[call]]行为，则会报错
+    - Array：Array 的 length 属性根据最大的下标自动发生变化。
+    - Object.prototype：作为所有正常对象的默认原型，不能再给它设置原型了。
+    - String：为了支持下标运算，String 的正整数属性访问会去字符串里查找。
+    - Arguments：arguments 的非负整数型下标属性跟对应的变量联动。
+    - 模块的 namespace 对象：特殊的地方非常多，跟一般对象完全不一样，尽量只用于 import
+    - 类型数组和数组缓冲区：跟内存块相关联，下标运算比较特殊
+    - bind 后的 function：跟原来的函数相关联
 
 
 
