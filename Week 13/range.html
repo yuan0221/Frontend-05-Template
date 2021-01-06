@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="a">
+    <span>1</span>
+    <p>2</p>
+    <a href="">3</a>
+    <div>4</div>
+  </div>
+
+  <script>
+    let element = document.getElementById("a");
+    function reverseChildren(element) {
+      let length = element.childNodes.length;
+      // ---** dom api ***----
+      // while (length-- > 0) {
+      //   element.appendChild(element.childNodes[length]);
+      // }
+      // ---** range api ***----
+      let range = new Range();
+
+      range.selectNodeContents(element);
+      let fragment = range.extractContents();
+      while (length-- > 0) {
+        fragment.appendChild(fragment.childNodes[length]);
+      }
+      element.appendChild(fragment);
+    }
+    reverseChildren(element);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,190 @@
+{
+  "root": {
+    "data": {
+      "id": "c85x9leh8hc0",
+      "created": 1609311361903,
+      "text": "Node"
+    },
+    "children": [
+      {
+        "data": {
+          "id": "c85xb12v9m80",
+          "created": 1609311474394,
+          "text": "Element ：元素型节点，跟标签相对应",
+          "expandState": "expand"
+        },
+        "children": [
+          {
+            "data": {
+              "id": "c85xecuomkw0",
+              "created": 1609311735113,
+              "text": "HTMLElement",
+              "expandState": "expand",
+              "priority": null
+            },
+            "children": [
+              {
+                "data": {
+                  "id": "c85xkaa9qtc0",
+                  "created": 1609312199710,
+                  "text": "HTMLAnchorElement - <a>"
+                },
+                "children": []
+              },
+              {
+                "data": {
+                  "id": "c85xkiygzco0",
+                  "created": 1609312218587,
+                  "text": "HTMLAppletElement"
+                },
+                "children": []
+              },
+              {
+                "data": {
+                  "id": "c85xmqcaidc0",
+                  "created": 1609312391389,
+                  "text": "HTMLAreaElement"
+                },
+                "children": []
+              },
+              {
+                "data": {
+                  "id": "c85xmutmr8w0",
+                  "created": 1609312401144,
+                  "text": "HTMLBodyElement"
+                },
+                "children": []
+              },
+              {
+                "data": {
+                  "id": "c85xmzd0me80",
+                  "created": 1609312411024,
+                  "text": "HTMLAudioElement"
+                },
+                "children": []
+              },
+              {
+                "data": {
+                  "id": "c85xnb6mx1s0",
+                  "created": 1609312436759,
+                  "text": "HTMLBaseElement"
+                },
+                "children": []
+              },
+              {
+                "data": {
+                  "id": "c85xnfzao9c0",
+                  "created": 1609312447199,
+                  "text": "..."
+                },
+                "children": []
+              }
+            ]
+          },
+          {
+            "data": {
+              "id": "c85xd5y4lnk0",
+              "created": 1609311641719,
+              "text": "SVGElement"
+            },
+            "children": [
+              {
+                "data": {
+                  "id": "c85xlt0dgmg0",
+                  "created": 1609312318834,
+                  "text": "SVGAElement"
+                },
+                "children": []
+              },
+              {
+                "data": {
+                  "id": "c85xm2gkp5s0",
+                  "created": 1609312339405,
+                  "text": "SVGAltglyphElement"
+                },
+                "children": []
+              },
+              {
+                "data": {
+                  "id": "c85xmk5ae7c0",
+                  "created": 1609312377905,
+                  "text": "..."
+                },
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "data": {
+          "id": "c85xble7iqg0",
+          "created": 1609311518615,
+          "text": "Document：文档根节点"
+        },
+        "children": []
+      },
+      {
+        "data": {
+          "id": "c85xc1ss6zk0",
+          "created": 1609311554325,
+          "text": "CharacterData：字符数据"
+        },
+        "children": [
+          {
+            "data": {
+              "id": "c85xfm8x77k0",
+              "created": 1609311833929,
+              "text": "Text：文本节点"
+            },
+            "children": [
+              {
+                "data": {
+                  "id": "c85xh6vt7lc0",
+                  "created": 1609311957212,
+                  "text": "CDATAsection：CDATA节点"
+                },
+                "children": []
+              }
+            ]
+          },
+          {
+            "data": {
+              "id": "c85xfo7ryqo0",
+              "created": 1609311838213,
+              "text": "Commont：注释"
+            },
+            "children": []
+          },
+          {
+            "data": {
+              "id": "c85xfqt878w0",
+              "created": 1609311843864,
+              "text": "ProcessingInstruction：处理信息"
+            },
+            "children": []
+          }
+        ]
+      },
+      {
+        "data": {
+          "id": "c85xcdkm2io0",
+          "created": 1609311579952,
+          "text": "DocumentFragment：文档片段"
+        },
+        "children": []
+      },
+      {
+        "data": {
+          "id": "c85xct2gurk0",
+          "created": 1609311613683,
+          "text": "DocumentType：文档类型"
+        },
+        "children": []
+      }
+    ]
+  },
+  "template": "right",
+  "theme": "fresh-blue",
+  "version": "1.4.43"
+}
