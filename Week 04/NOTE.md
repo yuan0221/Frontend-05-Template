@@ -150,6 +150,8 @@
         "apple, pear! orange; tea".split(/\W+/);  // ["apple", "pear", "orange", "tea"]
       ```
 
-
+- 正则的匹配原理
+  - 有穷状态自动机
+  - 有穷自动机的实现称为正则的引擎
 
 
