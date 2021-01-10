@@ -181,30 +181,42 @@
   - LabelledStatement
     - 语句名字，配合循环语句使用
   - TryStatement
-    - try catch finally
+    ```
+      try {
+
+      } catch() {
+
+      } finally {
+
+      }
+    ```
 
 ## 声明
 - 类型
-  - FunctionDeclaration
-  - GeneratorDeclaration
-  - AsyncFunctionDeclaration
-  - AsyncGeneratorDeclaration
-  - VariableStatement
-  - ClassDeclaration
-  - LexicalDeclaration
-- 例子
+  - 老版本
+    - 四种函数声明
+      - FunctionDeclaration  普通函数声明 
+      - GeneratorDeclaration 函数后面加*号
+      - AsyncFunctionDeclaration 函数前面加 async
+      - AsyncGeneratorDeclaration 函数前面加 async 后面加*号
+    - VariableStatement  变量声明 var声明的
+  - es6
+    - ClassDeclaration  类的声明
+    - LexicalDeclaration  作用域声明，let const声明的
+- 行为
   - 老版本
     - function
     - function *
     - async function
     - async function*
     - var
-  - 新规范
+  - es6
     - class
     - const 
     - let
       
 - 预处理 pre-process
+  - 所有的声明都是有预处理机制的，都能把变量变成局部变量，区别是const声明，在const之前使用的话会抛错，并且会被try catch处理
   - 例子
     ```
       var a = 2;
@@ -225,19 +237,48 @@
       console.log(a); //抛错
     ```
 
+- 作用域
+  - var的作用域是它所在的函数的作用域，const作用域是它外面花括号的作用域
+  ```
+    var a = 2;
+    void function() {
+      a=1;
+      {
+        var a;
+      }
+    }();
+    console.log(a); //2
 
+    var a = 2;
+    void function() {
+      a=1;
+      {
+        const a;
+      }
+    }();
+    console.log(a); //1
+  ```
 
 # js结构化
-
-## 宏任务
-  - 宏任务是传给javascript引擎的任务
-
-## 微任务
-  - 微任务是javascript引擎内部的任务
-  - 在js中只有promise会产微任务
-
-## js函数调用
-  - 例子
+- js执行力度（运行时）
+  - 宏任务（MacroTask）
+    - 传给javascript引擎的任务
+    - 可以理解javascript引擎是一个静态库，我们将外部的一段代码传给js引擎时候，这个过程叫做一个宏任务，这段代码中的promise的then产生异步，将这段代码分成几个微任务，一个微任务在js中叫做一个job
+  - 微任务（MicroTask）
+    - javascript引擎内部的任务
+    - 在js中只有promise会产微任务
+  - 函数调用
+    - 在一个微任务代码也不是顺次执行的，函数调用会改变一个微任务里面代码执行顺序
+    - 函数调用会产生调用栈，每一次代码执行都会在调用栈中形成一个执行上下文（Execution Context）
+      - Execution Context包含七部分：
+        - code evalution
+        - Function
+        - Script or Module
+        - Generator
+        - Realm
+        - LexicalEnvironment
+        - VariableEnviroment
+    - 例子
     ```
       import { foo } from 'foo.js';
       var i = 0;
@@ -251,3 +292,42 @@
       }
       export foo;
     ```
+  - 语句/声明 （Completion Record）
+  - 表达式（Reference）
+  - 直接量/变量/this...
+
+- Execution Context
+  - ECMAScript Code Execution Context
+    - code evalution
+    - Function
+    - Script or Module
+    - Realm
+    - LexicalEnvironment
+    - VariableEnviroment
+  - Generator Execution Contexts
+    - code evalution
+    - Function
+    - Script or Module
+    - Realm
+    - LexicalEnvironment
+      - this
+      - new.target
+      - super
+      - 变量
+    - VariableEnviroment
+      - 仅仅处理var声明的
+    - Generator
+
+- Environment Record
+  - Declarative Environment Records
+    - Function Environment Records
+    - Module Environment Records
+  - Global Environment Records
+  - Object Environment Records
+
+- Closure
+  - js中每个函数都会生成一个闭包，闭包由代码部分，和环境部分组成
+  - 环境部分由一个object和一个变量序列组成
+  - 在js中每一个函数都会带一个它定义时所在的 Environment Records，把这个对象保存在自己函数身上，当做一个属性
+
+- Realm
