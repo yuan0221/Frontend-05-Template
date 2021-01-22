@@ -21,6 +21,8 @@ export class Carousel extends Component {
     }
     
     enableGesture(this.root);
+    let tl = new TimeLine;
+    tl.start();
 
     let children = this.root.children;
 
@@ -94,27 +96,27 @@ export class Carousel extends Component {
 
       document.addEventListener("mousemove", move);
       document.addEventListener("mouseup", up);
-    })
+    })*/
 
-    let currentIndex = 0;
     setInterval(() => {
       let children = this.root.children;
-      let nextIndex = (currentIndex + 1) % children.length;
+      let nextIndex = (position + 1) % children.length;
 
-      let current = children[currentIndex];
+      let current = children[position];
       let next = children[nextIndex];
 
       next.style.transition = "none";
-      next.style.transform = `translateX(${100 - nextIndex * 100}%)`;
+      next.style.transform = `translateX(${500 - nextIndex * 500}px)`;
 
-      setTimeout(() => {
-        next.style.transition = "";
-        current.style.transform = `translateX(${-100 - currentIndex * 100}%)`;
-        next.style.transform = `translateX(${-nextIndex * 100}%)`;
+      tl.add(new Animation(current.style, "transform", 
+      - position * 500, - 500 - position * 500, 500, 0, linear, v => `translateX(${v}px)`))
 
-        currentIndex = nextIndex;
-      }, 16)
-    }, 3000)*/
+      tl.add(new Animation(next.style, "transform", 
+      500 - nextIndex * 500, - nextIndex * 500, 500, 0, linear, v => `translateX(${v}px)`))
+
+      position = nextIndex;
+      
+    }, 3000)
     return this.root;
   }
   mountTo(parent) {
