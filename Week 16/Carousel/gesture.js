@@ -5,7 +5,7 @@ export class Dispatcher {
   dispatch(type, properties) {
     let event = new Event(type);
     for (let name in properties) {
-      event.name = properties[name];
+      event[name] = properties[name];
     }
     // 派发事件
     this.element.dispatchEvent(event);
@@ -183,7 +183,7 @@ export class Recognizer {
         (point.clientY - context.points[0].y) ** 2);
       v = d / (Date.now() - context.points[0].t);
     }
-    console.log(v);
+    console.log("速度", v);
     context.isFlick = true;
     if (v > 1.5) {
       this.dispatcher.dispatch("flick", {

@@ -1,4 +1,7 @@
 import { Component, createElement } from "./framework"
+import {enableGesture} from "./gesture.js"
+import {Animation, TimeLine} from "./animation.js"
+import {linear} from "./ease.js"
 
 export class Carousel extends Component {
   constructor() {
@@ -16,10 +19,39 @@ export class Carousel extends Component {
       child.style.backgroundImage = `url('${record}')`;
       this.root.appendChild(child);
     }
+    
+    enableGesture(this.root);
 
+    let children = this.root.children;
 
     let position = 0;
-    this.root.addEventListener("mousedown", event => {
+
+    this.root.addEventListener("pan", (event) => {
+      let x = event.clientX - event.startX;
+      let current = position - ((x - x % 500) / 500);
+
+      for(let offset of [-1, 0, 1]) {
+        let pos = current + offset;
+        pos = (pos % children.length + children.length) % children.length;
+
+        children[pos].style.transition = "none";
+        children[pos].style.transform = `translateX(${- pos * 500 + offset * 500 + x % 500}px)`;
+      }
+    })
+
+    this.root.addEventListener("panend", (event) => {
+      let x = event.clientX - event.startX;
+      position = position - Math.round(x / 500);
+
+      for(let offset of [0, -Math.sign(Math.round(x / 500) - x + 250 * Math.sign(x))]) {
+        let pos = position + offset;
+        pos = (pos + children.length) % children.length;
+
+        children[pos].style.transition = "";
+        children[pos].style.transform = `translateX(${- pos * 500 + offset * 500}px)`;
+      }
+    })
+    /*this.root.addEventListener("mousedown", event => {
       let children = this.root.children;
       let startX = event.clientX;
 
@@ -64,7 +96,7 @@ export class Carousel extends Component {
       document.addEventListener("mouseup", up);
     })
 
-    /*let currentIndex = 0;
+    let currentIndex = 0;
     setInterval(() => {
       let children = this.root.children;
       let nextIndex = (currentIndex + 1) % children.length;
