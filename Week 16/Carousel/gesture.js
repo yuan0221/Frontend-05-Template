@@ -114,6 +114,12 @@ export class Recognizer {
     context.isPress = false;
     context.isTap = true;
     context.startX = point.clientX; context.startY = point.clientY;
+
+    this.dispatcher.dispatch("start", {
+      clientX: point.clientX,
+      clientY: point.clientY,
+    });
+
     context.points = [{
       t: Date.now(),
       x: point.clientX,
@@ -155,7 +161,8 @@ export class Recognizer {
       });
     }
   
-    context.points = context.points.filter(point => (Date.now() - point.t > 500));
+    // console.log("context.points", context.points);
+    // context.points = context.points.filter(point => (Date.now() - point.t > 500));
   
     context.points.push({
       t: Date.now(),
@@ -164,6 +171,8 @@ export class Recognizer {
     });
   }
   end(point, context) {
+    // console.log("point", point);
+    // console.log("context.points", context.points);
     if (context.isTap) {
       this.dispatcher.dispatch("tap", {});
       clearTimeout(context.handler);
@@ -172,10 +181,9 @@ export class Recognizer {
       this.dispatcher.dispatch("pressend", {});
     }
 
-  
-    context.points = context.points.filter(point => (Date.now() - point.t) > 500);
+
+    // context.points = context.points.filter(point => (Date.now() - point.t) > 500);
     let d, v;
-  
     if (!context.points.length) {
       v = 0;
     } else {
@@ -207,9 +215,20 @@ export class Recognizer {
         clientX: point.clientX,
         clientY: point.clientY,
         isVertical: context.isVertical,
-        isFlick: context.isFlick
+        isFlick: context.isFlick,
+        velocity: v
       });
     }
+
+    this.dispatcher.dispatch("end", {
+      startX: context.startX,
+      startY: context.startY,
+      clientX: point.clientX,
+      clientY: point.clientY,
+      isVertical: context.isVertical,
+      isFlick: context.isFlick,
+      velocity: v
+    });
   }
   cancel(point, handler) {
     clearTimeout(context.handler);
