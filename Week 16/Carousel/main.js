@@ -1,6 +1,7 @@
 import { createElement } from "./framework"
 import {Carousel} from './Carousel'
 import { Button } from './Button.js'
+import { List } from './List.js'
 
 
 let d = [
@@ -33,7 +34,17 @@ let d = [
 
 // let a = <Button></Button>
 
-let a = <Button>content</Button>
+// let a = <Button>content</Button>
 
+let a = (
+  <List data={d}>
+    {(record) => (
+      <div>
+        <img src={record.img} />
+        <a href={record.url}>{record.title}</a>
+      </div>
+    )}
+  </List>
+);
 
 a.mountTo(document.body);
