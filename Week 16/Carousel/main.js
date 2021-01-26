@@ -1,6 +1,6 @@
-import { Component, createElement } from "./framework"
-import {Carousel} from './carousel'
-import {TimeLine, Animation} from './animation'
+import { createElement } from "./framework"
+import {Carousel} from './Carousel'
+import { Button } from './Button.js'
 
 
 let d = [
@@ -26,8 +26,14 @@ let d = [
   }
 ]
 
-let a = <Carousel src={d} 
-    onChange={event => console.log(event.detail.position)}
-    onClick={event => {window.location = event.detail.data.url;}}
-    />
+// let a = <Carousel src={d} 
+//     onChange={event => console.log(event.detail.position)}
+//     onClick={event => {window.location = event.detail.data.url;}}
+//     />
+
+// let a = <Button></Button>
+
+let a = <Button>content</Button>
+
+
 a.mountTo(document.body);

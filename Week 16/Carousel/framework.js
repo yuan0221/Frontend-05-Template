@@ -26,11 +26,17 @@ export class Component {
     this[ATTRIBUTE] = Object.create(null);
     this[STATE] = Object.create(null);
   }
+  render(){
+    return this.root;
+  }
   setAttribute(name, value) {
     this[ATTRIBUTE][name] = value;
   }
   appendChild(child) {
     // this.root.appendChild(child);
+    if (!this.root) {
+      this.render();
+    }
     child.mountTo(this.root);
   }
   mountTo(parent) {
@@ -45,12 +51,14 @@ export class Component {
 
 class ElementWrapper extends Component{
   constructor(type) {
+    super();
     this.root = document.createElement(type);
   }
 }
 
 class TextWrapper extends Component{
   constructor(content) {
+    super();
     this.root = document.createTextNode(content);
   }
 }
