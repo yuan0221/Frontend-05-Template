@@ -19,13 +19,11 @@ export function createElement(type, attributes, ...children) {
 
 export class Component {
   constructor(type) {
-    // this.root = this.render();
   }
   setAttribute(name, value) {
     this.root.setAttribute(name, value);
   }
   appendChild(child) {
-    // this.root.appendChild(child);
     child.mountTo(this.root);
   }
   mountTo(parent) {

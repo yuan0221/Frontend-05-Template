@@ -3,8 +3,10 @@ import { Component, createElement } from "./framework"
 class Carousel extends Component {
   constructor() {
     super();
+    // 这里将数据 d 存到 attributes 中
     this.attributes = Object.create(null);
   }
+  // 重写 setAttribute
   setAttribute(name, value) {
     this.attributes[name] = value;
   }
@@ -17,7 +19,7 @@ class Carousel extends Component {
       this.root.appendChild(child);
     }
 
-
+    // 鼠标拖动轮播
     let position = 0;
     this.root.addEventListener("mousedown", event => {
       let children = this.root.children;
@@ -25,8 +27,9 @@ class Carousel extends Component {
 
       let move = event => {
         let x = event.clientX - startX;
-
         let current = position - ((x - x % 500) / 500);
+
+        // 设置循环拖动
         for(let offset of [-1, 0, 1]) {
           let pos = current + offset;
           pos = (pos + children.length) % children.length;
@@ -34,6 +37,8 @@ class Carousel extends Component {
           children[pos].style.transition = "none";
           children[pos].style.transform = `translateX(${- pos * 500 + offset * 500 + x % 500}px)`;
         }
+
+        // 存在问题：1）不能循环拖动，2）每次拖动移动了所有 children，性能问题
         // for(let child of children) {
         //   child.style.transition = "none";
         //   child.style.transform = `translateX(${- position * 500 + x}px)`;
@@ -64,6 +69,8 @@ class Carousel extends Component {
       document.addEventListener("mouseup", up);
     })
 
+    
+    // 自动轮播
     /*let currentIndex = 0;
     setInterval(() => {
       let children = this.root.children;
