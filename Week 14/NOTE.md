@@ -18,7 +18,8 @@
     - Children
 
 ### 为组件添加JSX语法
-
+markup
+javascript
 
 
 ### JSX组件的基本使用方法
