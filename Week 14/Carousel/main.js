@@ -27,9 +27,12 @@ class Carousel extends Component {
 
       let move = event => {
         let x = event.clientX - startX;
+
+        // 如果 position=0 表示当前屏幕上图片的位置，那么计算出的 current 是移动后当前屏幕上的图片位置
+        // eg. 向右边移动，移动不足500px时候，current=0，移动>=500px时候，current=-1
         let current = position - ((x - x % 500) / 500);
 
-        // 设置循环拖动
+        // 循环数组[-1, 0, 1]，修改了当前图片前后的图片能正确显示其位置
         for(let offset of [-1, 0, 1]) {
           let pos = current + offset;
           pos = (pos + children.length) % children.length;
@@ -52,6 +55,8 @@ class Carousel extends Component {
         for(let offset of [0, -Math.sign(Math.round(x / 500) - x + 250 * Math.sign(x))]) {
           let pos = position + offset;
           pos = (pos + children.length) % children.length;
+          if(offset === 0)
+            position = pos;
 
           children[pos].style.transition = "";
           children[pos].style.transform = `translateX(${- pos * 500 + offset * 500}px)`;
