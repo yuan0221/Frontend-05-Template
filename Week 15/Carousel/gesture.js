@@ -23,7 +23,7 @@ export class Listener {
 
     // 鼠标的监听
     element.addEventListener("mousedown", event => {
-      console.log("按下了" + event.button);
+      // console.log("按下了" + event.button);
       let context = Object.create(null);
       contexts.set("mouse" + (1 << event.button), context);
 
@@ -110,6 +110,7 @@ export class Recognizer {
     this.dispatcher = dispatcher;
   }
   start(point, context) {
+    // console.log("start");
     context.isPan = false;
     context.isPress = false;
     context.isTap = true;
@@ -125,10 +126,12 @@ export class Recognizer {
       context.isPress = true;
       context.isTap = false;
       context.handler = null;
+      console.log("press");
       this.dispatcher.dispatch("press", {});
     }, 500);
   }
   move(point, context) {
+    // console.log("move");
     let dx = point.clientX - context.startX, dy = point.clientY - context.startY;
     if (!context.isPan && dx ** 2 + dy ** 2 > 100) {
       context.isPan = true;
@@ -136,6 +139,7 @@ export class Recognizer {
       context.isTap = false;
       context.isVertical = Math.abs(dx) < Math.abs(dy);
       clearTimeout(context.handler);
+      console.log("panstart");
       this.dispatcher.dispatch("panstart", {
         startX: context.startX,
         startY: context.startY,
@@ -146,6 +150,7 @@ export class Recognizer {
     }
   
     if (context.isPan) {
+      console.log("pan");
       this.dispatcher.dispatch("pan", {
         startX: context.startX,
         startY: context.startY,
@@ -164,11 +169,14 @@ export class Recognizer {
     });
   }
   end(point, context) {
+    // console.log("end");
     if (context.isTap) {
+      console.log("tap");
       this.dispatcher.dispatch("tap", {});
       clearTimeout(context.handler);
     }
     if (context.isPress) {
+      console.log("pressend");
       this.dispatcher.dispatch("pressend", {});
     }
 
@@ -183,7 +191,7 @@ export class Recognizer {
         (point.clientY - context.points[0].y) ** 2);
       v = d / (Date.now() - context.points[0].t);
     }
-    console.log(v);
+    console.log("速度", v);
     context.isFlick = true;
     if (v > 1.5) {
       this.dispatcher.dispatch("flick", {
@@ -201,6 +209,7 @@ export class Recognizer {
     }
 
     if (context.isPan) {
+      console.log("panend");
       this.dispatcher.dispatch("panend", {
         startX: context.startX,
         startY: context.startY,
@@ -211,7 +220,9 @@ export class Recognizer {
       });
     }
   }
-  cancel(point, handler) {
+  // 触屏才会有cancel
+  cancel(point, context) {
+    console.log("cancel");
     clearTimeout(context.handler);
     this.dispatcher.dispatch("cancel", {})
   }

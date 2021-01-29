@@ -1,4 +1,4 @@
-import { Component, createElement } from "./framework"
+import { Component } from "./framework"
 
 export class Carousel extends Component {
   constructor() {
@@ -34,10 +34,6 @@ export class Carousel extends Component {
           children[pos].style.transition = "none";
           children[pos].style.transform = `translateX(${- pos * 500 + offset * 500 + x % 500}px)`;
         }
-        // for(let child of children) {
-        //   child.style.transition = "none";
-        //   child.style.transform = `translateX(${- position * 500 + x}px)`;
-        // }
       }
 
       let up = event => {
@@ -52,10 +48,6 @@ export class Carousel extends Component {
           children[pos].style.transform = `translateX(${- pos * 500 + offset * 500}px)`;
         }
 
-        // for(let child of children) {
-        //   child.style.transition = "";
-        //   child.style.transform = `translateX(${- position * 500}px)`;
-        // }
         document.removeEventListener("mousemove", move);
         document.removeEventListener("mouseup", up);
       }

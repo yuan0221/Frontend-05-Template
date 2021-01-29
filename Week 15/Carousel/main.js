@@ -1,4 +1,4 @@
-import { Component, createElement } from "./framework"
+import { createElement } from "./framework"
 import {Carousel} from './carousel'
 import {TimeLine, Animation} from './animation'
 
@@ -16,5 +16,11 @@ a.mountTo(document.body);
 let tl = new TimeLine();
 window.tl = tl;
 window.animation = new Animation({set a(v) {console.log(v)}}, "a", 0, 100, 1000, null);
+
+// 打印 0-100
 // tl.add(new Animation({set a(v) {console.log(v)}}, "a", 0, 100, 1000, null));
+
+// 时间线动态更新
+// tl.add(animation);
+
 tl.start();
