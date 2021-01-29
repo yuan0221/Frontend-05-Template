@@ -43,6 +43,8 @@ export class Carousel extends Component {
         for(let offset of [0, -Math.sign(Math.round(x / 500) - x + 250 * Math.sign(x))]) {
           let pos = position + offset;
           pos = (pos + children.length) % children.length;
+          if(offset === 0)
+            position = pos;
 
           children[pos].style.transition = "";
           children[pos].style.transform = `translateX(${- pos * 500 + offset * 500}px)`;

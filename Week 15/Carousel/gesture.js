@@ -160,8 +160,6 @@ export class Recognizer {
       });
     }
   
-    context.points = context.points.filter(point => (Date.now() - point.t > 500));
-  
     context.points.push({
       t: Date.now(),
       x: point.clientX,
@@ -180,10 +178,10 @@ export class Recognizer {
       this.dispatcher.dispatch("pressend", {});
     }
 
-  
-    context.points = context.points.filter(point => (Date.now() - point.t) > 500);
+    // 过滤掉时间比较久的点，保留500毫秒之内的点
+    context.points = context.points.filter(point => (Date.now() - point.t) < 500);
+    
     let d, v;
-  
     if (!context.points.length) {
       v = 0;
     } else {
@@ -194,6 +192,7 @@ export class Recognizer {
     console.log("速度", v);
     context.isFlick = true;
     if (v > 1.5) {
+      console.log("flick");
       this.dispatcher.dispatch("flick", {
         startX: context.startX,
         startY: context.startY,
