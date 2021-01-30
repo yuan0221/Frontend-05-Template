@@ -191,6 +191,7 @@ export class Recognizer {
     }
     console.log("速度", v);
     context.isFlick = true;
+    // 速度单位：像素/毫秒
     if (v > 1.5) {
       console.log("flick");
       this.dispatcher.dispatch("flick", {

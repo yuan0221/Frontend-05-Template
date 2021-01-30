@@ -1,4 +1,4 @@
-import { Component, createElement, STATE, ATTRIBUTE } from "./framework"
+import { Component, STATE, ATTRIBUTE } from "./framework"
 import { enableGesture } from "./gesture.js"
 import { Animation, TimeLine } from "./animation.js"
 import { ease } from "./cubicBezier.js"
@@ -33,8 +33,12 @@ export class Carousel extends Component {
     this.root.addEventListener("start", (event) => {
       tl.pause();
       clearInterval(handler);
-      let progress = (Date.now() - t) / 500;
-      ax = ease(progress) * 500 - 500;
+      // if (Date.now() - t < 500) {
+        let progress = (Date.now() - t) / 500;
+        ax = ease(progress) * 500 - 500;
+      // } else {
+      //   ax = 0;
+      // }
     })
 
     this.root.addEventListener("tap", event => {

@@ -27,24 +27,24 @@ let d = [
   }
 ]
 
-// let a = <Carousel src={d} 
-//     onChange={event => console.log(event.detail.position)}
-//     onClick={event => {window.location = event.detail.data.url;}}
-//     />
+let a = <Carousel src={d} 
+    onChange={event => console.log(event.detail.position)}
+    onClick={event => {window.location = event.detail.data.url;}}
+    />
 
 // let a = <Button></Button>
 
-// let a = <Button>content</Button>
+// let a = <Button>content</Button> 
 
-let a = (
-  <List data={d}>
-    {(record) => (
-      <div>
-        <img src={record.img} />
-        <a href={record.url}>{record.title}</a>
-      </div>
-    )}
-  </List>
-);
+// let a = (
+//   <List data={d}>
+//     {(record) => (
+//       <div>
+//         <img src={record.img} />
+//         <a href={record.url}>{record.title}</a>
+//       </div>
+//     )}
+//   </List>
+// );
 
 a.mountTo(document.body);

@@ -136,12 +136,11 @@ export class Recognizer {
   }
   move(point, context) {
     let dx = point.clientX - context.startX, dy = point.clientY - context.startY;
+    context.isVertical = Math.abs(dx) < Math.abs(dy);
     if (!context.isPan && dx ** 2 + dy ** 2 > 100) {
       context.isPan = true;
       context.isPress = false;
       context.isTap = false;
-      context.isVertical = Math.abs(dx) < Math.abs(dy);
-      clearTimeout(context.handler);
       this.dispatcher.dispatch("panstart", {
         startX: context.startX,
         startY: context.startY,
@@ -149,6 +148,7 @@ export class Recognizer {
         clientY: point.clientY,
         isVertical: context.isVertical
       });
+      clearTimeout(context.handler);
     }
   
     if (context.isPan) {
@@ -161,9 +161,6 @@ export class Recognizer {
       });
     }
   
-    // console.log("context.points", context.points);
-    // context.points = context.points.filter(point => (Date.now() - point.t > 500));
-  
     context.points.push({
       t: Date.now(),
       x: point.clientX,
@@ -171,8 +168,6 @@ export class Recognizer {
     });
   }
   end(point, context) {
-    // console.log("point", point);
-    // console.log("context.points", context.points);
     if (context.isTap) {
       this.dispatcher.dispatch("tap", {});
       clearTimeout(context.handler);
@@ -181,8 +176,8 @@ export class Recognizer {
       this.dispatcher.dispatch("pressend", {});
     }
 
-
-    // context.points = context.points.filter(point => (Date.now() - point.t) > 500);
+    context.points = context.points.filter(point => (Date.now() - point.t) < 500);
+    
     let d, v;
     if (!context.points.length) {
       v = 0;
