@@ -7,17 +7,18 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha --require @babel/register"
+    "test": "nyc mocha --require @babel/register",
+    "coverage": "nyc mocha"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.13",
     "@babel/register": "^7.12.10",
+    "@istanbuljs/nyc-config-babel": "^3.0.0",
+    "babel-plugin-istanbul": "^6.0.0",
     "mocha": "^8.2.1",
     "nyc": "^15.1.0"
-  },
-  "dependencies": {
-    "@babel/preset-env": "^7.12.11"
   }
 }
