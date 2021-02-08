@@ -1,6 +1,9 @@
 const http = require("http");
+const fs = require("fs");
 
 http.createServer((req, res) => {
-  console.log(req);
-  res.end("hello publish-server");
+  console.log("request");
+  const outFile = fs.createWriteStream("../server/public/index.html");
+  req.pipe(outFile);
+  
 }).listen("8082");
