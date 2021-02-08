@@ -1,7 +1,8 @@
 const http = require("http");
 const fs = require("fs");
+const archiver = require('archiver');
 
-fs.stat("./sample.html", (err, stats) => {
+// fs.stat("./sample.html", (err, stats) => {
 
   let request = http.request({
     hostname: "127.0.0.1",
@@ -9,15 +10,22 @@ fs.stat("./sample.html", (err, stats) => {
     method: "POST",
     headers: {
       "Content-Type": "application/octet-stream",
-      "Content-Size": stats.size
+      // "Content-Size": stats.size
     }
   }, response => {
     console.log(response);
   })
 
-  const file = fs.createReadStream("./sample.html");
+  // const file = fs.createReadStream("./sample.html");
 
-  file.pipe(request);
+  const archive = archiver('zip', {
+    zlib: { level: 9 } // Sets the compression level.
+  });
 
-  request.on("end", () => request.end());
-})
+  archive.directory('sample/', false);
+
+  // archive.pipe(fs.createWriteStream("tmp.zip"));
+  archive.pipe(request);
+
+  archive.finalize();
+// })
