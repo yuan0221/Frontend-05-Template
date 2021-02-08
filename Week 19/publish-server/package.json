@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "querystring": "^0.2.0",
     "unzipper": "^0.10.11"
   }
 }
