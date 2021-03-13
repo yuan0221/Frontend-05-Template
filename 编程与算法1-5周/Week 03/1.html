@@ -1,0 +1,64 @@
+<script>
+  const str = 'aaabbbccc'
+  let o = {};
+  for(let i = 0; i < str.length; i++) {
+    const s = str.charAt(i);
+    if(o[s]) {
+      o[s] ++;
+    } else {
+      o[s] = 1;
+    }
+  }
+
+  let max = 0;
+  for(let k in o) {
+    if(o[k] > max) {
+      max = o[k];
+    }
+  }
+
+  for(let k in o) {
+    if(o[k] === max) {
+      console.log(k, max)
+    }
+  }  
+
+  function debounce (fn, wait) {
+    let timeout;
+    return function(){
+      if (timeout) clearTimeout(timeout);
+      timeout = setTimeout(fn,wait);
+    }
+  }
+
+  function throttle(fn,delay){
+    let valid = true
+    return function() {
+      if(!valid){
+        return false 
+      }
+      valid = false
+      setTimeout(() => {
+        fn()
+        valid = true;
+      }, delay)
+    }
+}
+
+  function fun() {
+    console.log("clicked")
+  }
+
+  document.onclick = debounce(fun, 300)
+
+
+
+
+
+  function fn(x,y) {
+    console.log(this)
+  }
+  fn(1,2) //window
+  const obj = {}
+  fn.bind(obj, 1,2)() //obj
+</script>
